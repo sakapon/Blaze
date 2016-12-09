@@ -1,2 +1,3 @@
-# Blaze
+## Blaze
+
 The library for basic mathematics.
