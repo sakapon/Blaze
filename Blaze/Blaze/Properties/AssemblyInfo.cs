@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,13 +7,17 @@ using System.Runtime.InteropServices;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("Blaze")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("The library for basic mathematics.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Keiho Sakapon")]
 [assembly: AssemblyProduct("Blaze")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("© 2016 Keiho Sakapon")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: AssemblyMetadata("ProjectUrl", "https://github.com/sakapon/Blaze")]
+[assembly: AssemblyMetadata("LicenseUrl", "https://github.com/sakapon/Blaze/blob/master/LICENSE")]
+[assembly: AssemblyMetadata("Tags", "math mathematics random")]
+[assembly: AssemblyMetadata("ReleaseNotes", "The first release.")]
 
 // ComVisible を false に設定すると、その型はこのアセンブリ内で COM コンポーネントから 
 // 参照不可能になります。COM からこのアセンブリ内の型にアクセスする場合は、
@@ -33,4 +38,7 @@ using System.Runtime.InteropServices;
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0")]
+
+[assembly: CLSCompliant(true)]
+[assembly: InternalsVisibleTo("UnitTest")]
