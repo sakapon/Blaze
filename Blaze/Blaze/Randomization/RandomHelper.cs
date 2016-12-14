@@ -9,7 +9,7 @@ namespace Blaze.Randomization
     /// </summary>
     public static class RandomHelper
     {
-        static readonly Random _random = new Random();
+        static readonly Random random = new Random();
 
         public static double NextDouble(double maxValue)
         {
@@ -20,7 +20,7 @@ namespace Blaze.Randomization
 
         public static double NextDouble(double minValue, double maxValue)
         {
-            return minValue + (maxValue - minValue) * _random.NextDouble();
+            return minValue + (maxValue - minValue) * random.NextDouble();
         }
 
         public static IEnumerable<int> ShuffleRange(int start, int count)
@@ -36,7 +36,7 @@ namespace Blaze.Randomization
 
             while (l.Count > 0)
             {
-                var index = _random.Next(l.Count);
+                var index = random.Next(l.Count);
                 yield return l[index];
                 l.RemoveAt(index);
             }
@@ -47,7 +47,7 @@ namespace Blaze.Randomization
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (source.Count == 0) throw new ArgumentException("The source must not be empty.", nameof(source));
 
-            return source[_random.Next(source.Count)];
+            return source[random.Next(source.Count)];
         }
 
         public static IEnumerable<T> GetRandomPiece<T>(this IList<T> source, int count)
@@ -58,7 +58,7 @@ namespace Blaze.Randomization
             if (count == 0) return Enumerable.Empty<T>();
             if (count >= source.Count) return source;
 
-            return Enumerable.Range(_random.Next(source.Count - count + 1), count)
+            return Enumerable.Range(random.Next(source.Count - count + 1), count)
                 .Select(i => source[i]);
         }
 
@@ -68,7 +68,7 @@ namespace Blaze.Randomization
             if (probabilities == null) throw new ArgumentNullException(nameof(probabilities));
             if (probabilities.Count == 0) throw new ArgumentException("The source must not be empty.", nameof(probabilities));
 
-            var v = _random.NextDouble();
+            var v = random.NextDouble();
 
             var sum = 0.0;
             for (var i = 0; i < probabilities.Count; i++)
@@ -86,7 +86,7 @@ namespace Blaze.Randomization
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (source.Count == 0) throw new ArgumentException("The source must not be empty.", nameof(source));
 
-            var v = _random.NextDouble();
+            var v = random.NextDouble();
 
             var sum = 0.0;
             foreach (var p in source)

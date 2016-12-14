@@ -7,6 +7,9 @@ using System.Security.Cryptography;
 
 namespace Blaze.Randomization
 {
+    /// <summary>
+    /// Provides a set of methods for random data.
+    /// </summary>
     public static class RandomUtility
     {
         const string Alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
