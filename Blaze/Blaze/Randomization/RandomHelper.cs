@@ -25,7 +25,14 @@ namespace Blaze.Randomization
 
         public static IEnumerable<int> ShuffleRange(int start, int count)
         {
-            var l = Enumerable.Range(start, count).ToList();
+            return Enumerable.Range(start, count).Shuffle();
+        }
+
+        public static IEnumerable<TSource> Shuffle<TSource>(this IEnumerable<TSource> source)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+
+            var l = source.ToList();
 
             while (l.Count > 0)
             {

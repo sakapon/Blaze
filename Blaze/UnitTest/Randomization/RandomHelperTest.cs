@@ -10,7 +10,7 @@ namespace UnitTest.Randomization
     public class RandomHelperTest
     {
         [TestMethod]
-        public void ShuffleRange()
+        public void ShuffleRange_1()
         {
             var set = new HashSet<int>(Enumerable.Range(0, 100));
             var result = RandomHelper.ShuffleRange(0, 100).ToArray();
