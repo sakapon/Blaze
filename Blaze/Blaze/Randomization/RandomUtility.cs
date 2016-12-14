@@ -44,7 +44,7 @@ namespace Blaze.Randomization
 
         public static byte[] GenerateBytes(int length)
         {
-            if (length < 0) throw new ArgumentOutOfRangeException("length", length, "The value must be non-negative.");
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length), length, "The value must be non-negative.");
 
             var data = new byte[length];
             generator.GetBytes(data);
@@ -116,7 +116,7 @@ namespace Blaze.Randomization
 
         public static string ToHexString(this byte[] data, bool uppercase)
         {
-            if (data == null) throw new ArgumentNullException("data");
+            if (data == null) throw new ArgumentNullException(nameof(data));
 
             var format = uppercase ? "X2" : "x2";
             return data
