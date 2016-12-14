@@ -23,18 +23,9 @@ namespace Blaze.Randomization
             return minValue + (maxValue - minValue) * _random.NextDouble();
         }
 
-        public static IEnumerable<int> ShuffleRange(int maxValue)
+        public static IEnumerable<int> ShuffleRange(int start, int count)
         {
-            if (maxValue < 0) throw new ArgumentOutOfRangeException("maxValue", "maxValue is less than 0.");
-
-            return ShuffleRange(0, maxValue);
-        }
-
-        public static IEnumerable<int> ShuffleRange(int minValue, int maxValue)
-        {
-            if (maxValue < minValue) throw new ArgumentOutOfRangeException("maxValue", "maxValue is less than minValue.");
-
-            var l = Enumerable.Range(minValue, maxValue - minValue).ToList();
+            var l = Enumerable.Range(start, count).ToList();
 
             while (l.Count > 0)
             {

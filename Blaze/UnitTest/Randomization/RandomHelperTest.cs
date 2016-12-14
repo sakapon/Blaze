@@ -13,7 +13,7 @@ namespace UnitTest.Randomization
         public void ShuffleRange()
         {
             var set = new HashSet<int>(Enumerable.Range(0, 100));
-            var result = RandomHelper.ShuffleRange(100).ToArray();
+            var result = RandomHelper.ShuffleRange(0, 100).ToArray();
 
             Assert.IsTrue(set.SetEquals(result));
         }
