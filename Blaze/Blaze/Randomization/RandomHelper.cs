@@ -13,7 +13,7 @@ namespace Blaze.Randomization
 
         public static double NextDouble(double maxValue)
         {
-            if (maxValue < 0) throw new ArgumentOutOfRangeException("maxValue", "maxValue is less than 0.");
+            if (maxValue < 0) throw new ArgumentOutOfRangeException(nameof(maxValue), maxValue, "The value must be non-negative.");
 
             return NextDouble(0, maxValue);
         }
@@ -30,7 +30,7 @@ namespace Blaze.Randomization
 
         public static IEnumerable<TSource> Shuffle<TSource>(this IEnumerable<TSource> source)
         {
-            if (source == null) throw new ArgumentNullException("source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
             var l = source.ToList();
 
@@ -44,16 +44,16 @@ namespace Blaze.Randomization
 
         public static T GetRandomElement<T>(this IList<T> source)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (source.Count == 0) throw new ArgumentException("The source must not be empty.", "source");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Count == 0) throw new ArgumentException("The source must not be empty.", nameof(source));
 
             return source[_random.Next(source.Count)];
         }
 
         public static IEnumerable<T> GetRandomPiece<T>(this IList<T> source, int count)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (count < 0) throw new ArgumentOutOfRangeException("count", count, "The value must be non-negative.");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count), count, "The value must be non-negative.");
 
             if (count == 0) return Enumerable.Empty<T>();
             if (count >= source.Count) return source;
