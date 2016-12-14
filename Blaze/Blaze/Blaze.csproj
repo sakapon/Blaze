@@ -43,8 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Randomization\RandomData.cs" />
     <Compile Include="Randomization\RandomHelper.cs" />
-    <Compile Include="Randomization\RandomUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -10,7 +10,7 @@ namespace Blaze.Randomization
     /// <summary>
     /// Provides a set of methods for random data.
     /// </summary>
-    public static class RandomUtility
+    public static class RandomData
     {
         const string Alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         const string Alphanumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
