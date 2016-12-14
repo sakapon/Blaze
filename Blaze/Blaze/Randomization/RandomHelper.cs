@@ -61,5 +61,41 @@ namespace Blaze.Randomization
             return Enumerable.Range(_random.Next(source.Count - count + 1), count)
                 .Select(i => source[i]);
         }
+
+        // The sum of values must be 1.
+        public static int GetRandomIndex(this IList<double> probabilities)
+        {
+            if (probabilities == null) throw new ArgumentNullException(nameof(probabilities));
+            if (probabilities.Count == 0) throw new ArgumentException("The source must not be empty.", nameof(probabilities));
+
+            var v = _random.NextDouble();
+
+            var sum = 0.0;
+            for (var i = 0; i < probabilities.Count; i++)
+            {
+                sum += probabilities[i];
+                if (v < sum) return i;
+            }
+
+            return probabilities.Count - 1;
+        }
+
+        // The sum of values must be 1.
+        public static T GetRandomElement<T>(this Dictionary<T, double> source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Count == 0) throw new ArgumentException("The source must not be empty.", nameof(source));
+
+            var v = _random.NextDouble();
+
+            var sum = 0.0;
+            foreach (var p in source)
+            {
+                sum += p.Value;
+                if (v < sum) return p.Key;
+            }
+
+            return source.Last().Key;
+        }
     }
 }
