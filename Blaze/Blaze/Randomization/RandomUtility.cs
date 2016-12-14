@@ -15,16 +15,7 @@ namespace Blaze.Randomization
         const string NonControlChars = @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
         static readonly Random random = new Random();
-        static readonly RandomNumberGenerator generator;
-
-        static RandomUtility()
-        {
-            generator = RandomNumberGenerator.Create();
-            AppDomain.CurrentDomain.ProcessExit += (o, e) =>
-            {
-                generator.Dispose();
-            };
-        }
+        static readonly RandomNumberGenerator generator = RandomNumberGenerator.Create();
 
         public static string GenerateAlphabets(int length)
         {
