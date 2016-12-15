@@ -7,7 +7,7 @@ namespace Blaze.Propositions
     public class VariableFormula<TStatement> : Formula
     {
         public override Formula[] Children => EmptyFormulas;
-        public override bool? IsTrue => Value;
+        public override bool? TruthValue => Value;
 
         public bool? Value { get; set; }
         public TStatement Statement { get; }
@@ -23,7 +23,7 @@ namespace Blaze.Propositions
     public class ConstantFormula : Formula
     {
         public override Formula[] Children => EmptyFormulas;
-        public override bool? IsTrue => Value;
+        public override bool? TruthValue => Value;
 
         public bool Value { get; }
 
@@ -65,7 +65,7 @@ namespace Blaze.Propositions
 
     public class NegationFormula : UnaryFormula
     {
-        public override bool? IsTrue => !Operand.IsTrue;
+        public override bool? TruthValue => !Operand.TruthValue;
 
         public NegationFormula(Formula operand) : base(operand) { }
 
@@ -74,7 +74,7 @@ namespace Blaze.Propositions
 
     public class AndFormula : BinaryFormula
     {
-        public override bool? IsTrue => Operand1.IsTrue & Operand2.IsTrue;
+        public override bool? TruthValue => Operand1.TruthValue & Operand2.TruthValue;
 
         public AndFormula(Formula operand1, Formula operand2) : base(operand1, operand2) { }
 
@@ -83,7 +83,7 @@ namespace Blaze.Propositions
 
     public class OrFormula : BinaryFormula
     {
-        public override bool? IsTrue => Operand1.IsTrue | Operand2.IsTrue;
+        public override bool? TruthValue => Operand1.TruthValue | Operand2.TruthValue;
 
         public OrFormula(Formula operand1, Formula operand2) : base(operand1, operand2) { }
 
@@ -92,7 +92,7 @@ namespace Blaze.Propositions
 
     public class ImplicationFormula : BinaryFormula
     {
-        public override bool? IsTrue => !Operand1.IsTrue | Operand2.IsTrue;
+        public override bool? TruthValue => !Operand1.TruthValue | Operand2.TruthValue;
 
         public ImplicationFormula(Formula operand1, Formula operand2) : base(operand1, operand2) { }
 
@@ -101,7 +101,7 @@ namespace Blaze.Propositions
 
     public class EquivalenceFormula : BinaryFormula
     {
-        public override bool? IsTrue => !(Operand1.IsTrue ^ Operand2.IsTrue);
+        public override bool? TruthValue => !(Operand1.TruthValue ^ Operand2.TruthValue);
 
         public EquivalenceFormula(Formula operand1, Formula operand2) : base(operand1, operand2) { }
 
@@ -110,7 +110,7 @@ namespace Blaze.Propositions
 
     public class XorFormula : BinaryFormula
     {
-        public override bool? IsTrue => Operand1.IsTrue ^ Operand2.IsTrue;
+        public override bool? TruthValue => Operand1.TruthValue ^ Operand2.TruthValue;
 
         public XorFormula(Formula operand1, Formula operand2) : base(operand1, operand2) { }
 

@@ -7,7 +7,7 @@ namespace Blaze.Propositions
     public abstract class Formula
     {
         public abstract Formula[] Children { get; }
-        public abstract bool? IsTrue { get; }
+        public abstract bool? TruthValue { get; }
 
         internal static Formula[] EmptyFormulas { get; } = new Formula[0];
 
