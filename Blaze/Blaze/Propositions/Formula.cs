@@ -14,7 +14,7 @@ namespace Blaze.Propositions
         public static Formula True { get; } = new ConstantFormula(true);
         public static Formula False { get; } = new ConstantFormula(false);
 
-        public static Formula Variable<TStatement>(TStatement statement) => new VariableFormula<TStatement>(statement);
+        public static VariableFormula<TStatement> Variable<TStatement>(TStatement statement) => new VariableFormula<TStatement>(statement);
         public static Formula Imply(Formula v1, Formula v2) => new ImplicationFormula(v1, v2);
         public static Formula Equivalent(Formula v1, Formula v2) => new EquivalenceFormula(v1, v2);
 
