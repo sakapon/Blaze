@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Blaze.Propositions
 {
+    [DebuggerDisplay(@"\{{ToString()}: {TruthValue}\}")]
     public abstract class Formula
     {
-        public abstract Formula[] Children { get; }
-        public abstract bool? TruthValue { get; }
-
         internal static Formula[] EmptyFormulas { get; } = new Formula[0];
 
         public static Formula True { get; } = new ConstantFormula(true);
@@ -26,5 +25,8 @@ namespace Blaze.Propositions
         public static Formula operator &(Formula v1, Formula v2) => new AndFormula(v1, v2);
         public static Formula operator |(Formula v1, Formula v2) => new OrFormula(v1, v2);
         public static Formula operator ^(Formula v1, Formula v2) => new XorFormula(v1, v2);
+
+        public abstract Formula[] Children { get; }
+        public abstract bool? TruthValue { get; }
     }
 }

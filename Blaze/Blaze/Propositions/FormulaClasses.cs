@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Blaze.Propositions
 {
-    [DebuggerDisplay(@"\{{Statement}: {Value}\}")]
-    public class VariableFormula<TStatement> : Formula
+    public abstract class VariableFormula : Formula
     {
         public override Formula[] Children => EmptyFormulas;
         public override bool? TruthValue => Value;
 
         public bool? Value { get; set; }
+    }
+
+    public class VariableFormula<TStatement> : VariableFormula
+    {
         public TStatement Statement { get; }
 
         public VariableFormula(TStatement statement)
