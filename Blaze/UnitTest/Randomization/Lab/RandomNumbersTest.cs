@@ -8,12 +8,22 @@ namespace UnitTest.Randomization.Lab
     public class RandomNumbersTest
     {
         [TestMethod]
+        public void GenerateByte_1()
+        {
+            for (var i = 0; i < 100; i++)
+            {
+                var x = RandomNumbers.GenerateByte();
+                Console.WriteLine(x);
+            }
+        }
+
+        [TestMethod]
         public void GenerateDouble_From0To1_1()
         {
-            for (var i = 0; i < 1000; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var x = RandomNumbers.GenerateDouble_From0To1();
-                Console.WriteLine(x);
+                Console.WriteLine($"{x:F3}");
                 Assert.IsTrue(x >= 0);
                 Assert.IsTrue(x < 1);
             }
