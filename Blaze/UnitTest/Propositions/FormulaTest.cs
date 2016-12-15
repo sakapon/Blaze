@@ -8,6 +8,19 @@ namespace UnitTest.Propositions
     public class FormulaTest
     {
         [TestMethod]
+        public void TruthValue_Negation()
+        {
+            var p = Variable("P");
+            var _p = !p;
+
+            Assert.AreEqual(null, _p.TruthValue);
+            p.Value = false;
+            Assert.AreEqual(true, _p.TruthValue);
+            p.Value = true;
+            Assert.AreEqual(false, _p.TruthValue);
+        }
+
+        [TestMethod]
         public void TruthValue_And()
         {
             var p = Variable("P");
@@ -50,6 +63,46 @@ namespace UnitTest.Propositions
             Assert.AreEqual(true, p_q.TruthValue);
 
             p.Value = true;
+            Assert.AreEqual(true, p_q.TruthValue);
+        }
+
+        [TestMethod]
+        public void TruthValue_Implication()
+        {
+            var p = Variable("P");
+            var q = Variable("Q");
+            var p_q = Imply(p, q);
+
+            p.Value = true;
+            q.Value = true;
+            Assert.AreEqual(true, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(false, p_q.TruthValue);
+
+            p.Value = false;
+            q.Value = true;
+            Assert.AreEqual(true, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(true, p_q.TruthValue);
+        }
+
+        [TestMethod]
+        public void TruthValue_Equivalence()
+        {
+            var p = Variable("P");
+            var q = Variable("Q");
+            var p_q = Equivalent(p, q);
+
+            p.Value = true;
+            q.Value = true;
+            Assert.AreEqual(true, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(false, p_q.TruthValue);
+
+            p.Value = false;
+            q.Value = true;
+            Assert.AreEqual(false, p_q.TruthValue);
+            q.Value = false;
             Assert.AreEqual(true, p_q.TruthValue);
         }
     }
