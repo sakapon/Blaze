@@ -1,9 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 namespace Blaze.Propositions
 {
+    [DebuggerDisplay(@"\{{Statement}: {Value}\}")]
+    public class VariableFormula<TStatement> : Formula
+    {
+        public override Formula[] Children => EmptyFormulas;
+        public override bool? IsTrue => Value;
+
+        public bool? Value { get; set; }
+        public TStatement Statement { get; }
+
+        public VariableFormula(TStatement statement)
+        {
+            Statement = statement;
+        }
+
+        public override string ToString() => $"{Statement}";
+    }
+
     public class ConstantFormula : Formula
     {
         public override Formula[] Children => EmptyFormulas;
