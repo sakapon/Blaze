@@ -28,5 +28,10 @@ namespace Blaze.Propositions
 
         public abstract Formula[] Children { get; }
         public abstract bool? TruthValue { get; }
+
+        // GetDescendants メソッドでは、要素が重複する可能性があります。
+        public IEnumerable<Formula> GetDescendants() => new[] { this }.Concat(Children.SelectMany(f => f.GetDescendants()));
+        public IEnumerable<TFormula> GetDescendants<TFormula>() where TFormula : Formula => GetDescendants().OfType<TFormula>();
+        public VariableFormula[] GetVariables() => GetDescendants<VariableFormula>().Distinct().ToArray();
     }
 }
