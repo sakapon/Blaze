@@ -77,6 +77,10 @@ namespace UnitTest.Propositions
             var syllogism = Imply(Imply(p, q) & Imply(q, r), Imply(p, r));
             Assert.AreEqual(true, syllogism.IsTautology());
 
+            // 背理法
+            var absurd = Imply(Imply(p, q) & Imply(p, !q), !p);
+            Assert.AreEqual(true, absurd.IsTautology());
+
             // 対偶
             var contraposition = Equivalent(Imply(p, q), Imply(!q, !p));
             Assert.AreEqual(true, contraposition.IsTautology());
