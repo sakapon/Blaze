@@ -8,6 +8,19 @@ namespace UnitTest.Propositions
     public class FormulaValueTest
     {
         [TestMethod]
+        public void TruthValue_Constant()
+        {
+            Assert.AreEqual(true, True.TruthValue);
+            Assert.AreEqual(false, False.TruthValue);
+
+            var p = Variable("P");
+            Assert.AreEqual(null, (p & True).TruthValue);
+            Assert.AreEqual(true, (p | True).TruthValue);
+            Assert.AreEqual(false, (p & False).TruthValue);
+            Assert.AreEqual(null, (p | False).TruthValue);
+        }
+
+        [TestMethod]
         public void TruthValue_Negation()
         {
             var p = Variable("P");
@@ -104,6 +117,26 @@ namespace UnitTest.Propositions
             Assert.AreEqual(false, p_q.TruthValue);
             q.Value = false;
             Assert.AreEqual(true, p_q.TruthValue);
+        }
+
+        [TestMethod]
+        public void TruthValue_Xor()
+        {
+            var p = Variable("P");
+            var q = Variable("Q");
+            var p_q = p ^ q;
+
+            p.Value = true;
+            q.Value = true;
+            Assert.AreEqual(false, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(true, p_q.TruthValue);
+
+            p.Value = false;
+            q.Value = true;
+            Assert.AreEqual(true, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(false, p_q.TruthValue);
         }
     }
 }
