@@ -33,5 +33,28 @@ namespace Blaze.Propositions
         public IEnumerable<Formula> GetDescendants() => new[] { this }.Concat(Children.SelectMany(f => f.GetDescendants()));
         public IEnumerable<TFormula> GetDescendants<TFormula>() where TFormula : Formula => GetDescendants().OfType<TFormula>();
         public VariableFormula[] GetVariables() => GetDescendants<VariableFormula>().Distinct().ToArray();
+
+        static readonly bool[] bools = new[] { true, false };
+        static readonly IEnumerable<bool> initialCombinations = new[] { false };
+
+        public bool IsTautology()
+        {
+            var variables = GetVariables();
+
+            try
+            {
+                // 変数の値のすべての組合せを列挙します。
+                return variables
+                    .Aggregate(initialCombinations, (q, v) => q.SelectMany(_ => bools.Select(b => { v.Value = b; return _; })))
+                    .All(_ => TruthValue.Value);
+            }
+            finally
+            {
+                foreach (var v in variables)
+                    v.Value = null;
+            }
+        }
+
+        public bool IsContradiction() => (!this).IsTautology();
     }
 }
