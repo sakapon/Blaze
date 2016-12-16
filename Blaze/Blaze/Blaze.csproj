@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Propositions\Formula.cs" />
+    <Compile Include="Propositions\FormulaClasses.cs" />
     <Compile Include="Randomization\Lab\RandomNumbers.cs" />
     <Compile Include="Randomization\RandomData.cs" />
     <Compile Include="Randomization\RandomHelper.cs" />

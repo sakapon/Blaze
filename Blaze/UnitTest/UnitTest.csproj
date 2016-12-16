@@ -53,6 +53,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Propositions\FormulaValueTest.cs" />
+    <Compile Include="Propositions\FormulaTest.cs" />
     <Compile Include="Randomization\Lab\RandomNumbersTest.cs" />
     <Compile Include="Randomization\RandomHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
