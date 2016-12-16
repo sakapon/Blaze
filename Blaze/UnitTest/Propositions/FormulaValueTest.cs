@@ -5,7 +5,7 @@ using static Blaze.Propositions.Formula;
 namespace UnitTest.Propositions
 {
     [TestClass]
-    public class FormulaTest
+    public class FormulaValueTest
     {
         [TestMethod]
         public void TruthValue_Negation()
