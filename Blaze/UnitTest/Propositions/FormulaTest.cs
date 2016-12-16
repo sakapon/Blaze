@@ -62,13 +62,20 @@ namespace UnitTest.Propositions
             var q = Variable("Q");
             var r = Variable("R");
 
-            // p & (p => q) => q
-            var target1 = Imply(p & Imply(p, q), q);
+            var target1 = Equivalent(!(p & q), !p | !q);
             Assert.AreEqual(true, target1.IsTautology());
 
-            // (p => q) & (q => r) => (p => r)
-            var target2 = Imply(Imply(p, q) & Imply(q, r), Imply(p, r));
+            var target2 = Equivalent(!(p | q), !p & !q);
             Assert.AreEqual(true, target2.IsTautology());
+
+            // p & (p => q) => q
+            var target3 = Imply(p & Imply(p, q), q);
+            Assert.AreEqual(true, target3.IsTautology());
+
+            // 三段論法
+            // (p => q) & (q => r) => (p => r)
+            var syllogism = Imply(Imply(p, q) & Imply(q, r), Imply(p, r));
+            Assert.AreEqual(true, syllogism.IsTautology());
 
             // 対偶
             var contraposition = Equivalent(Imply(p, q), Imply(!q, !p));
