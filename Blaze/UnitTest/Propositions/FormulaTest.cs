@@ -141,5 +141,20 @@ namespace UnitTest.Propositions
             (Imply(p, q) & Imply(p, !q)).Determine(p);
             Assert.AreEqual(false, p.Value);
         }
+
+        [TestMethod]
+        public void Determine_3()
+        {
+            // 場合分け
+            ((p | q) & Imply(p, r) & Imply(q, r)).Determine(r);
+            Assert.AreEqual(true, r.Value);
+        }
+
+        [TestMethod]
+        public void Determine_4()
+        {
+            Imply(p, q).Determine(q);
+            Assert.AreEqual(null, q.Value);
+        }
     }
 }
