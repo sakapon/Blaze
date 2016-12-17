@@ -9,11 +9,21 @@ namespace UnitTest.Propositions
     [TestClass]
     public class FormulaTest
     {
+        VariableFormula p;
+        VariableFormula q;
+        VariableFormula r;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            p = Variable("P");
+            q = Variable("Q");
+            r = Variable("R");
+        }
+
         [TestMethod]
         public void GetDescendants_1()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
             var p_q = Imply(p & q, p | q);
 
             var descendants = p_q.GetDescendants().ToArray();
@@ -25,8 +35,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Variable_1()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
             var p_q = Imply(p & q, p | q);
 
             var actual = p_q.GetVariables();
@@ -46,8 +54,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Tautology_2()
         {
-            var p = Variable("P");
-
             Assert.AreEqual(false, p.IsTautology());
             Assert.AreEqual(false, (p & !p).IsTautology());
             Assert.AreEqual(true, (p | !p).IsTautology());
@@ -58,10 +64,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Tautology_3()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
-            var r = Variable("R");
-
             var target1 = Equivalent(!(p & q), !p | !q);
             Assert.AreEqual(true, target1.IsTautology());
 
@@ -98,8 +100,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Contradiction_2()
         {
-            var p = Variable("P");
-
             Assert.AreEqual(false, p.IsContradiction());
             Assert.AreEqual(true, (p & !p).IsContradiction());
             Assert.AreEqual(false, (p | !p).IsContradiction());
@@ -110,9 +110,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Contradiction_3()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
-
             var target1 = Imply(p, q) & Imply(p, !q);
             Assert.AreEqual(false, target1.IsContradiction());
 
@@ -123,9 +120,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Determine_1()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
-
             // p & (p => q) => q
             (p & Imply(p, q)).Determine(q);
             Assert.AreEqual(true, q.Value);
@@ -134,9 +128,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Determine_1_1()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
-
             // p & (p => q) => q
             p.Value = true;
             Imply(p, q).Determine(q);
@@ -146,9 +137,6 @@ namespace UnitTest.Propositions
         [TestMethod]
         public void Determine_2()
         {
-            var p = Variable("P");
-            var q = Variable("Q");
-
             // 背理法
             (Imply(p, q) & Imply(p, !q)).Determine(p);
             Assert.AreEqual(false, p.Value);
