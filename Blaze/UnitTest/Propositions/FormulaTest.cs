@@ -119,5 +119,39 @@ namespace UnitTest.Propositions
             var target2 = p & Imply(p, q) & Imply(p, !q);
             Assert.AreEqual(true, target2.IsContradiction());
         }
+
+        [TestMethod]
+        public void Determine_1()
+        {
+            var p = Variable("P");
+            var q = Variable("Q");
+
+            // p & (p => q) => q
+            (p & Imply(p, q)).Determine(q);
+            Assert.AreEqual(true, q.Value);
+        }
+
+        [TestMethod]
+        public void Determine_1_1()
+        {
+            var p = Variable("P");
+            var q = Variable("Q");
+
+            // p & (p => q) => q
+            p.Value = true;
+            Imply(p, q).Determine(q);
+            Assert.AreEqual(true, q.Value);
+        }
+
+        [TestMethod]
+        public void Determine_2()
+        {
+            var p = Variable("P");
+            var q = Variable("Q");
+
+            // 背理法
+            (Imply(p, q) & Imply(p, !q)).Determine(p);
+            Assert.AreEqual(false, p.Value);
+        }
     }
 }
