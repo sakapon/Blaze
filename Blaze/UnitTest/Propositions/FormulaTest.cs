@@ -201,5 +201,27 @@ namespace UnitTest.Propositions
             kb.Determine(k2);
             Assert.AreEqual(true, k2.Value);
         }
+
+        [TestMethod]
+        public void Knights_1_20()
+        {
+            var k1 = Variable("K1");
+            var k2 = Variable("K2");
+
+            // Q 1.20
+            var kb = Equivalent(k1, k1 & k2);
+
+            var kb_t = kb & Equivalent(k2, k1);
+            kb_t.Determine(k1);
+            Assert.AreEqual(null, k1.Value);
+            kb_t.Determine(k2);
+            Assert.AreEqual(null, k2.Value);
+
+            var kb_f = kb & Equivalent(k2, !k1);
+            kb_f.Determine(k1);
+            Assert.AreEqual(false, k1.Value);
+            kb_f.Determine(k2);
+            Assert.AreEqual(true, k2.Value);
+        }
     }
 }
