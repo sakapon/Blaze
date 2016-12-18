@@ -28,7 +28,7 @@ namespace UnitTest.Propositions
 
             var descendants = p_q.GetDescendants().ToArray();
             Assert.AreEqual(7, descendants.Length);
-            var ands = p_q.GetDescendants<AndFormula>().ToArray();
+            var ands = p_q.GetDescendants().OfType<AndFormula>().ToArray();
             Assert.AreEqual(1, ands.Length);
         }
 
