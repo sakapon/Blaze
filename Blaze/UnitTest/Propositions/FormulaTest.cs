@@ -156,5 +156,50 @@ namespace UnitTest.Propositions
             Imply(p, q).Determine(q);
             Assert.AreEqual(null, q.Value);
         }
+
+        [TestMethod]
+        public void Knights_1_3()
+        {
+            var k1 = Variable("K1");
+            var k2 = Variable("K2");
+
+            // Q 1.3
+            var kb = Equivalent(k1, !k1 & !k2);
+
+            kb.Determine(k1);
+            Assert.AreEqual(false, k1.Value);
+            kb.Determine(k2);
+            Assert.AreEqual(true, k2.Value);
+        }
+
+        [TestMethod]
+        public void Knights_1_4()
+        {
+            var k1 = Variable("K1");
+            var k2 = Variable("K2");
+
+            // Q 1.4
+            var kb = Equivalent(k1, !k1 | !k2);
+
+            kb.Determine(k1);
+            Assert.AreEqual(true, k1.Value);
+            kb.Determine(k2);
+            Assert.AreEqual(false, k2.Value);
+        }
+
+        [TestMethod]
+        public void Knights_1_5()
+        {
+            var k1 = Variable("K1");
+            var k2 = Variable("K2");
+
+            // Q 1.5
+            var kb = Equivalent(k1, Equivalent(k1, k2));
+
+            kb.Determine(k1);
+            Assert.AreEqual(null, k1.Value);
+            kb.Determine(k2);
+            Assert.AreEqual(true, k2.Value);
+        }
     }
 }
