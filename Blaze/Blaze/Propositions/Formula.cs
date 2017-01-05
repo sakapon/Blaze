@@ -8,7 +8,7 @@ namespace Blaze.Propositions
     [DebuggerDisplay(@"\{{ToString()}: {TruthValue}\}")]
     public abstract class Formula
     {
-        internal static Formula[] EmptyFormulas { get; } = new Formula[0];
+        internal static readonly Formula[] EmptyFormulas = new Formula[0];
 
         public static Formula True { get; } = new ConstantFormula(true);
         public static Formula False { get; } = new ConstantFormula(false);
