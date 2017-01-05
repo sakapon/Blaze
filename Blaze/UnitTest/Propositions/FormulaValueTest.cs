@@ -107,16 +107,19 @@ namespace UnitTest.Propositions
         {
             var p_q = Equivalent(p, q);
 
-            p.Value = true;
-            q.Value = true;
-            Assert.AreEqual(true, p_q.TruthValue);
+            Assert.AreEqual(null, p_q.TruthValue);
             q.Value = false;
-            Assert.AreEqual(false, p_q.TruthValue);
+            Assert.AreEqual(null, p_q.TruthValue);
+            q.Value = true;
+            Assert.AreEqual(null, p_q.TruthValue);
 
             p.Value = false;
+            q.Value = false;
+            Assert.AreEqual(true, p_q.TruthValue);
             q.Value = true;
             Assert.AreEqual(false, p_q.TruthValue);
-            q.Value = false;
+
+            p.Value = true;
             Assert.AreEqual(true, p_q.TruthValue);
         }
 
@@ -125,16 +128,19 @@ namespace UnitTest.Propositions
         {
             var p_q = p ^ q;
 
-            p.Value = true;
-            q.Value = true;
-            Assert.AreEqual(false, p_q.TruthValue);
+            Assert.AreEqual(null, p_q.TruthValue);
             q.Value = false;
-            Assert.AreEqual(true, p_q.TruthValue);
+            Assert.AreEqual(null, p_q.TruthValue);
+            q.Value = true;
+            Assert.AreEqual(null, p_q.TruthValue);
 
             p.Value = false;
+            q.Value = false;
+            Assert.AreEqual(false, p_q.TruthValue);
             q.Value = true;
             Assert.AreEqual(true, p_q.TruthValue);
-            q.Value = false;
+
+            p.Value = true;
             Assert.AreEqual(false, p_q.TruthValue);
         }
     }
