@@ -14,6 +14,13 @@ namespace Blaze.Propositions
         public static Formula False { get; } = new ConstantFormula(false);
 
         public static VariableFormula<TStatement> Variable<TStatement>(TStatement statement) => new VariableFormula<TStatement>(statement);
+        public static VariableFormula<TStatement> Variable<TStatement>(TStatement statement, bool? value)
+        {
+            var v = new VariableFormula<TStatement>(statement);
+            v.Value = value;
+            return v;
+        }
+
         public static Formula Negate(Formula v) => new NegationFormula(v);
         public static Formula And(Formula v1, Formula v2) => new AndFormula(v1, v2);
         public static Formula Or(Formula v1, Formula v2) => new OrFormula(v1, v2);
