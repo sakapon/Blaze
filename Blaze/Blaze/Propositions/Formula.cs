@@ -44,6 +44,16 @@ namespace Blaze.Propositions
         public IEnumerable<Formula> GetDescendants() => new[] { this }.Concat(Children.SelectMany(f => f.GetDescendants()));
         public VariableFormula[] GetVariables() => GetDescendants().OfType<VariableFormula>().Distinct().Where(v => v.Value == null).ToArray();
 
+        // 指定された主張を表す変数を取得します。なければ作成します。
+        public VariableFormula<TStatement> GetOrCreateVariable<TStatement>(TStatement statement) =>
+            GetDescendants()
+                .OfType<VariableFormula<TStatement>>()
+                .Distinct()
+                .FirstOrDefault(v => Equals(v.Statement, statement)) ??
+            Variable(statement);
+
+        public VariableFormula<TStatement> GetOrCreateVariable<TStatement>(VariableFormula<TStatement> variable) => GetOrCreateVariable(variable.Statement);
+
         static readonly bool[] bools = new[] { true, false };
         static readonly IEnumerable<bool> initialCombinations = new[] { false };
 
