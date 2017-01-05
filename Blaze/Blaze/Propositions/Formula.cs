@@ -42,7 +42,7 @@ namespace Blaze.Propositions
 
         // GetDescendants メソッドでは、要素が重複する可能性があります。
         public IEnumerable<Formula> GetDescendants() => new[] { this }.Concat(Children.SelectMany(f => f.GetDescendants()));
-        public VariableFormula[] GetVariables() => GetDescendants().OfType<VariableFormula>().Distinct().Where(v => v.Value == null).ToArray();
+        public IEnumerable<VariableFormula> GetVariables() => GetDescendants().OfType<VariableFormula>().Distinct();
 
         // 指定された主張を表す変数を取得します。なければ作成します。
         public VariableFormula<TStatement> GetOrCreateVariable<TStatement>(TStatement statement) =>
@@ -59,7 +59,9 @@ namespace Blaze.Propositions
 
         public bool IsTautology()
         {
-            var variables = GetVariables();
+            var variables = GetVariables()
+                .Where(v => v.Value == null)
+                .ToArray();
 
             try
             {

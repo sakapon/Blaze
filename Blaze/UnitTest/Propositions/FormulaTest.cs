@@ -33,11 +33,11 @@ namespace UnitTest.Propositions
         }
 
         [TestMethod]
-        public void Variable_1()
+        public void GetVariables_1()
         {
             var p_q = Imply(p & q, p | q);
 
-            var actual = p_q.GetVariables();
+            var actual = p_q.GetVariables().ToArray();
             var expected = new[] { p, q };
             CollectionAssert.AreEqual(expected, actual);
         }
