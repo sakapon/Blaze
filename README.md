@@ -18,3 +18,4 @@ Install-Package Blaze
 - **v1.0.4** The first release with randomization.
 - **v1.1.6** Add features for propositional logic.
 - **v1.1.8** Add methods to determine the truth value.
+- **v1.1.10** Add methods for Formula.
