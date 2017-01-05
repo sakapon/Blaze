@@ -33,13 +33,23 @@ namespace UnitTest.Propositions
         }
 
         [TestMethod]
-        public void Variable_1()
+        public void GetVariables_1()
         {
             var p_q = Imply(p & q, p | q);
 
-            var actual = p_q.GetVariables();
+            var actual = p_q.GetVariables().ToArray();
             var expected = new[] { p, q };
             CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetOrCreateVariable_1()
+        {
+            var p_q = Imply(p & q, p | q);
+
+            Assert.AreEqual(p, p_q.GetOrCreateVariable("P"));
+            var s = p_q.GetOrCreateVariable("S");
+            Assert.AreEqual(false, p_q.GetVariables().Contains(s));
         }
 
         [TestMethod]
