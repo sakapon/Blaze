@@ -89,16 +89,26 @@ namespace UnitTest.Propositions
         {
             var p_q = Imply(p, q);
 
-            p.Value = true;
+            Assert.AreEqual(null, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(null, p_q.TruthValue);
             q.Value = true;
             Assert.AreEqual(true, p_q.TruthValue);
-            q.Value = false;
-            Assert.AreEqual(false, p_q.TruthValue);
 
             p.Value = false;
-            q.Value = true;
+            q.Value = null;
             Assert.AreEqual(true, p_q.TruthValue);
             q.Value = false;
+            Assert.AreEqual(true, p_q.TruthValue);
+            q.Value = true;
+            Assert.AreEqual(true, p_q.TruthValue);
+
+            p.Value = true;
+            q.Value = null;
+            Assert.AreEqual(null, p_q.TruthValue);
+            q.Value = false;
+            Assert.AreEqual(false, p_q.TruthValue);
+            q.Value = true;
             Assert.AreEqual(true, p_q.TruthValue);
         }
 
