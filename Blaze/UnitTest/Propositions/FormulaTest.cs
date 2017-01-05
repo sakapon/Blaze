@@ -43,6 +43,16 @@ namespace UnitTest.Propositions
         }
 
         [TestMethod]
+        public void GetOrCreateVariable_1()
+        {
+            var p_q = Imply(p & q, p | q);
+
+            Assert.AreEqual(p, p_q.GetOrCreateVariable("P"));
+            var s = p_q.GetOrCreateVariable("S");
+            Assert.AreEqual(false, p_q.GetVariables().Contains(s));
+        }
+
+        [TestMethod]
         public void Tautology_1()
         {
             Assert.AreEqual(true, True.IsTautology());
