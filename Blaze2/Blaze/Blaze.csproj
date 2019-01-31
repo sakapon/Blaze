@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
-    <Version>2.0.10</Version>
+    <Version>2.0.11</Version>
     <Title>Blaze</Title>
     <AssemblyTitle>Blaze</AssemblyTitle>
     <Product>Blaze</Product>
