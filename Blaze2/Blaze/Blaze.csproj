@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
+    <Version>2.0.11</Version>
+    <Title>Blaze</Title>
+    <AssemblyTitle>Blaze</AssemblyTitle>
+    <Product>Blaze</Product>
+    <Description>The library for basic mathematics.</Description>
+    <Authors>Keiho Sakapon</Authors>
+    <Copyright>© 2016 Keiho Sakapon</Copyright>
+    <PackageProjectUrl>https://github.com/sakapon/Blaze</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/sakapon/Blaze/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>math mathematics random proposition</PackageTags>
+    <PackageReleaseNotes>For .NET Standard.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>bin\Release\Blaze.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
