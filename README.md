@@ -16,7 +16,7 @@ Install-Package Blaze
 
 ## Target Frameworks
 - .NET Standard 2.0
-- .NET Framework 4.0
+- .NET Framework 4.5
 
 ## Release Notes
 - **v2.0.11** For .NET Standard.
