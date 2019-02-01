@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <Version>2.0.11</Version>
     <Title>Blaze</Title>
     <AssemblyTitle>Blaze</AssemblyTitle>
@@ -11,7 +11,7 @@
     <Copyright>© 2016 Keiho Sakapon</Copyright>
     <PackageProjectUrl>https://github.com/sakapon/Blaze</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/sakapon/Blaze/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageTags>math mathematics random proposition</PackageTags>
+    <PackageTags>Math Mathematics Random Proposition</PackageTags>
     <PackageReleaseNotes>For .NET Standard.</PackageReleaseNotes>
   </PropertyGroup>
 
