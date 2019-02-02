@@ -17,14 +17,17 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextDouble_Rare()
+        public void NextDoubles_Rare()
         {
-            for (var i = 0; i < 10000; i++)
-            {
-                var x = NormalDistribution.NextDouble();
-                if (Math.Abs(x) > 3)
-                    Console.WriteLine(x);
-            }
+            var count = 10000;
+            var values = NormalDistribution.NextDoubles()
+                .Take(count)
+                .Where(x => Math.Abs(x) > 3)
+                .ToArray();
+
+            Console.WriteLine($"{(double)values.Length * 100 / count} %");
+            foreach (var x in values.OrderBy(Math.Abs))
+                Console.WriteLine(x);
         }
     }
 }
