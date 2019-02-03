@@ -6,6 +6,7 @@ namespace Blaze.Randomization.Lab
     public static class NormalDistribution
     {
         static readonly Random random = new Random();
+        static readonly IEnumerator<double> doublesEnumerator = NextDoubles().GetEnumerator();
 
         // 0 < x < 1
         static double NextDoubleExceptZero()
@@ -15,14 +16,6 @@ namespace Blaze.Randomization.Lab
                 var x = random.NextDouble();
                 if (x != 0.0) return x;
             }
-        }
-
-        public static double NextDouble()
-        {
-            var x = NextDoubleExceptZero();
-            var y = NextDoubleExceptZero();
-
-            return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(2 * Math.PI * y);
         }
 
         public static IEnumerable<double> NextDoubles()
@@ -35,6 +28,12 @@ namespace Blaze.Randomization.Lab
                 yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(2 * Math.PI * y);
                 yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Cos(2 * Math.PI * y);
             }
+        }
+
+        public static double NextDouble()
+        {
+            doublesEnumerator.MoveNext();
+            return doublesEnumerator.Current;
         }
     }
 }
