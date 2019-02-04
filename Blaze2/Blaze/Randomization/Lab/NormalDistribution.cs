@@ -5,7 +5,7 @@ namespace Blaze.Randomization.Lab
 {
     public static class NormalDistribution
     {
-        internal const double DefaultMaxSigma = 2.5; // ≒ 99 %
+        internal const double DefaultMaxSigma = 3.0;
         static readonly Random random = new Random();
         static readonly IEnumerator<double> doublesEnumerator = NextDoubles().GetEnumerator();
 

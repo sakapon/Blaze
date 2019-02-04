@@ -65,10 +65,20 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextDouble_5()
+        public void NextDouble_1()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDouble(5))
+                .Select(_ => NormalDistribution.NextDouble(1))
+                .OrderBy(x => x);
+            foreach (var x in values)
+                Console.WriteLine(x);
+        }
+
+        [TestMethod]
+        public void NextDouble_1_2()
+        {
+            var values = Enumerable.Repeat(false, 100)
+                .Select(_ => NormalDistribution.NextDouble(1, 2))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
