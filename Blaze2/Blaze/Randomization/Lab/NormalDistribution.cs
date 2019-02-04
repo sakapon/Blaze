@@ -5,6 +5,7 @@ namespace Blaze.Randomization.Lab
 {
     public static class NormalDistribution
     {
+        internal const double DefaultMaxSigma = 2.5; // ≒ 99 %
         static readonly Random random = new Random();
         static readonly IEnumerator<double> doublesEnumerator = NextDoubles().GetEnumerator();
 
@@ -34,6 +35,24 @@ namespace Blaze.Randomization.Lab
         {
             doublesEnumerator.MoveNext();
             return doublesEnumerator.Current;
+        }
+
+        public static double NextDoubleInSigma(double maxSigma = DefaultMaxSigma)
+        {
+            if (maxSigma < 1) throw new ArgumentOutOfRangeException(nameof(maxSigma), maxSigma, "The value must be large enough.");
+
+            // 範囲外の値を無視します。
+            while (true)
+            {
+                var x = NextDouble();
+                if (Math.Abs(x) < maxSigma) return x;
+            }
+        }
+
+        public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
+        {
+            var x = NextDoubleInSigma(maxSigma);
+            return x * maxAbsValue / maxSigma;
         }
     }
 }

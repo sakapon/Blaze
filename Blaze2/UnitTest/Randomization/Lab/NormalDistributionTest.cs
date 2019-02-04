@@ -29,5 +29,45 @@ namespace UnitTest.Randomization.Lab
             foreach (var x in values.OrderBy(Math.Abs))
                 Console.WriteLine(x);
         }
+
+        [TestMethod]
+        public void NextDoubleInSigma()
+        {
+            var values = Enumerable.Repeat(false, 100)
+                .Select(_ => NormalDistribution.NextDoubleInSigma())
+                .OrderBy(x => x);
+
+            foreach (var x in values)
+            {
+                Assert.IsTrue(Math.Abs(x) < NormalDistribution.DefaultMaxSigma);
+                Console.WriteLine(x);
+            }
+        }
+
+        [TestMethod]
+        public void NextDoubleInSigma_Max()
+        {
+            var max = 2.0;
+            var values = Enumerable.Repeat(false, 100)
+                .Select(_ => NormalDistribution.NextDoubleInSigma(max))
+                .OrderBy(x => x);
+
+            foreach (var x in values)
+            {
+                Assert.IsTrue(Math.Abs(x) < max);
+                Console.WriteLine(x);
+            }
+        }
+
+        [TestMethod]
+        public void NextDouble_5()
+        {
+            var values = Enumerable.Repeat(false, 100)
+                .Select(_ => NormalDistribution.NextDouble(5))
+                .OrderBy(x => x);
+
+            foreach (var x in values)
+                Console.WriteLine(x);
+        }
     }
 }
