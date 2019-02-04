@@ -37,6 +37,7 @@ namespace Blaze.Randomization.Lab
             return doublesEnumerator.Current;
         }
 
+        // -σ < x < σ
         public static double NextDoubleInSigma(double maxSigma = DefaultMaxSigma)
         {
             if (maxSigma < 1) throw new ArgumentOutOfRangeException(nameof(maxSigma), maxSigma, "The value must be large enough.");
@@ -49,10 +50,18 @@ namespace Blaze.Randomization.Lab
             }
         }
 
+        // -M < x < M
         public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
         {
             var x = NextDoubleInSigma(maxSigma);
             return x * maxAbsValue / maxSigma;
+        }
+
+        // -M < x < M
+        public static int NextInt32(int maxAbsValue, double maxSigma = DefaultMaxSigma)
+        {
+            var x = NextDouble(maxAbsValue + 0.5, maxSigma);
+            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
         }
     }
 }

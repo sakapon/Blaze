@@ -73,5 +73,25 @@ namespace UnitTest.Randomization.Lab
             foreach (var x in values)
                 Console.WriteLine(x);
         }
+
+        [TestMethod]
+        public void NextInt32_10()
+        {
+            var values = Enumerable.Repeat(false, 100)
+                .Select(_ => NormalDistribution.NextInt32(10))
+                .OrderBy(x => x);
+            foreach (var x in values)
+                Console.WriteLine(x);
+        }
+
+        [TestMethod]
+        public void NextInt32_50()
+        {
+            var values = Enumerable.Repeat(false, 100)
+                .Select(_ => 50 + NormalDistribution.NextInt32(25))
+                .OrderBy(x => x);
+            foreach (var x in values)
+                Console.WriteLine(x);
+        }
     }
 }
