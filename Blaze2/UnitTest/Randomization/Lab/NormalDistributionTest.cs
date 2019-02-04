@@ -49,7 +49,7 @@ namespace UnitTest.Randomization.Lab
         [TestMethod]
         public void NextDoubleInSigma_Max()
         {
-            var max = 2.0;
+            var max = 1.5;
 
             for (var i = 0; i < 10000; i++)
             {
@@ -75,23 +75,35 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextInt32_10()
+        public void NextDouble_Score()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextInt32(10))
+                .Select(_ => 50 + NormalDistribution.NextDouble(25))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
         }
 
         [TestMethod]
-        public void NextInt32_50()
+        public void NextInt32_5()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => 50 + NormalDistribution.NextInt32(25))
+                .Select(_ => NormalDistribution.NextInt32(5))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
+        }
+
+        [TestMethod]
+        public void NextInt32_Many()
+        {
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => NormalDistribution.NextInt32(10))
+                .GroupBy(x => x)
+                .Select(g => new { x = g.Key, count = g.Count() })
+                .OrderBy(_ => _.x);
+            foreach (var _ in values)
+                Console.WriteLine($"{_.x}: {_.count}");
         }
     }
 }
