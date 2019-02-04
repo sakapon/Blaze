@@ -115,5 +115,41 @@ namespace UnitTest.Randomization.Lab
             foreach (var _ in values)
                 Console.WriteLine($"{_.x}: {_.count}");
         }
+
+        [TestMethod]
+        public void Atan()
+        {
+            var M = Math.Atan(double.PositiveInfinity) * 2 / Math.PI;
+            var m = Math.Atan(double.NegativeInfinity) * 2 / Math.PI;
+
+            // arctan を用いて有限区間に射影する実験です。
+            var count = 10000;
+            var maxSigma = 3.5;
+            var maxAbsValue = 10.5;
+            var atanCoefficient = 0.5;
+
+            var normals = NormalDistribution.NextDoubles()
+                .Take(count)
+                .ToArray();
+
+            var ranges = normals
+                .Select(x => Math.Abs(x) >= maxSigma ? NormalDistribution.NextDoubleInSigma(maxSigma) : x)
+                .Select(x => x * maxAbsValue / maxSigma)
+                .Select(x => (int)Math.Round(x, MidpointRounding.AwayFromZero))
+                .GroupBy(x => x)
+                .Select(g => new { x = g.Key, count = g.Count() })
+                .OrderBy(_ => _.x);
+            foreach (var _ in ranges)
+                Console.WriteLine($"{_.x}: {_.count}");
+
+            var atans = normals
+                .Select(x => Math.Atan(atanCoefficient * x) * maxAbsValue * 2 / Math.PI)
+                .Select(x => (int)Math.Round(x, MidpointRounding.AwayFromZero))
+                .GroupBy(x => x)
+                .Select(g => new { x = g.Key, count = g.Count() })
+                .OrderBy(_ => _.x);
+            foreach (var _ in atans)
+                Console.WriteLine($"{_.x}: {_.count}");
+        }
     }
 }
