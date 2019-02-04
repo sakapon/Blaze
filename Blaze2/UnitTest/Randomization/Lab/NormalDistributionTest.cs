@@ -10,13 +10,6 @@ namespace UnitTest.Randomization.Lab
     public class NormalDistributionTest
     {
         [TestMethod]
-        public void NextDouble()
-        {
-            for (var i = 0; i < 100; i++)
-                Console.WriteLine(NormalDistribution.NextDouble());
-        }
-
-        [TestMethod]
         public void NextDoubles_Rare()
         {
             var count = 10000;
@@ -31,32 +24,44 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
+        public void NextDouble()
+        {
+            for (var i = 0; i < 100; i++)
+                Console.WriteLine(NormalDistribution.NextDouble());
+        }
+
+        [TestMethod]
         public void NextDoubleInSigma()
         {
+            for (var i = 0; i < 10000; i++)
+            {
+                var x = NormalDistribution.NextDoubleInSigma();
+                Assert.IsTrue(Math.Abs(x) < NormalDistribution.DefaultMaxSigma);
+            }
+
             var values = Enumerable.Repeat(false, 100)
                 .Select(_ => NormalDistribution.NextDoubleInSigma())
                 .OrderBy(x => x);
-
             foreach (var x in values)
-            {
-                Assert.IsTrue(Math.Abs(x) < NormalDistribution.DefaultMaxSigma);
                 Console.WriteLine(x);
-            }
         }
 
         [TestMethod]
         public void NextDoubleInSigma_Max()
         {
             var max = 2.0;
+
+            for (var i = 0; i < 10000; i++)
+            {
+                var x = NormalDistribution.NextDoubleInSigma(max);
+                Assert.IsTrue(Math.Abs(x) < max);
+            }
+
             var values = Enumerable.Repeat(false, 100)
                 .Select(_ => NormalDistribution.NextDoubleInSigma(max))
                 .OrderBy(x => x);
-
             foreach (var x in values)
-            {
-                Assert.IsTrue(Math.Abs(x) < max);
                 Console.WriteLine(x);
-            }
         }
 
         [TestMethod]
@@ -65,7 +70,6 @@ namespace UnitTest.Randomization.Lab
             var values = Enumerable.Repeat(false, 100)
                 .Select(_ => NormalDistribution.NextDouble(5))
                 .OrderBy(x => x);
-
             foreach (var x in values)
                 Console.WriteLine(x);
         }
