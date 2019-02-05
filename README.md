@@ -16,9 +16,10 @@ Install-Package Blaze
 
 ## Target Frameworks
 - .NET Standard 2.0
-- .NET Framework 4.0
+- .NET Framework 4.5
 
 ## Release Notes
+- **v2.0.12** Add features for normal distribution.
 - **v2.0.11** For .NET Standard.
 - **v1.1.10** Add methods for Formula.
 - **v1.1.8** Add methods to determine the truth value.
