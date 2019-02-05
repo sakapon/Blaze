@@ -113,7 +113,7 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void Atan()
+        public void MapTest()
         {
             var M = Math.Atan(double.PositiveInfinity) * 2 / Math.PI; //  1.0
             var m = Math.Atan(double.NegativeInfinity) * 2 / Math.PI; // -1.0
@@ -135,6 +135,12 @@ namespace UnitTest.Randomization.Lab
 
             Console.WriteLine("Using arctan:");
             WriteSummary(normals.Select(x => Math.Atan(0.5 * x) * maxAbsValue * 2 / Math.PI));
+
+            Console.WriteLine("Using exponential:");
+            WriteSummary(normals.Select(x => Math.Sign(x) * (1 - Math.Exp(-0.3 * Math.Abs(x))) * maxAbsValue));
+
+            Console.WriteLine("Using inverse:");
+            WriteSummary(normals.Select(x => Math.Sign(x) * (1 - 1 / (1 + 0.3 * Math.Abs(x))) * maxAbsValue));
         }
 
         static void WriteSummary(IEnumerable<double> values) =>
