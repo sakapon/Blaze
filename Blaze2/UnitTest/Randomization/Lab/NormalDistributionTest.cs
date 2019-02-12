@@ -107,53 +107,23 @@ namespace UnitTest.Randomization.Lab
         [TestMethod]
         public void NextInt32_Many()
         {
-            var values = Enumerable.Repeat(false, 10000)
-                .Select(_ => NormalDistribution.NextInt32(10));
-            WriteSummary(values);
-        }
-
-        [TestMethod]
-        public void MapTest()
-        {
-            var M = Math.Atan(double.PositiveInfinity) * 2 / Math.PI; //  1.0
-            var m = Math.Atan(double.NegativeInfinity) * 2 / Math.PI; // -1.0
-
-            // 有限区間に射影する実験です。
             var count = 10000;
-            var maxAbsValue = 10.5;
-            var maxSigma = 3.5;
-
-            var normals = NormalDistribution.NextDoubles()
-                .Take(count)
-                .ToArray();
-
-            Console.WriteLine("Using range:");
-            var ranges = normals
-                .Select(x => Math.Abs(x) >= maxSigma ? NormalDistribution.NextDoubleInSigma(maxSigma) : x)
-                .Select(x => x * maxAbsValue / maxSigma);
-            WriteSummary(ranges);
-
-            Console.WriteLine("Using arctan:");
-            WriteSummary(normals.Select(x => Math.Atan(0.5 * x) * maxAbsValue * 2 / Math.PI));
-
-            Console.WriteLine("Using exponential:");
-            WriteSummary(normals.Select(x => Math.Sign(x) * (1 - Math.Exp(-0.3 * Math.Abs(x))) * maxAbsValue));
-
-            Console.WriteLine("Using inverse:");
-            WriteSummary(normals.Select(x => Math.Sign(x) * (1 - 1 / (1 + 0.3 * Math.Abs(x))) * maxAbsValue));
+            var values = Enumerable.Repeat(false, count)
+                .Select(_ => NormalDistribution.NextInt32(10));
+            WriteSummary(values, count);
         }
 
-        static void WriteSummary(IEnumerable<double> values) =>
-            WriteSummary(values.Select(x => (int)Math.Round(x, MidpointRounding.AwayFromZero)));
+        static void WriteSummary(IEnumerable<double> values, int count) =>
+            WriteSummary(values.Select(x => (int)Math.Round(x, MidpointRounding.AwayFromZero)), count);
 
-        static void WriteSummary(IEnumerable<int> values)
+        static void WriteSummary(IEnumerable<int> values, int count)
         {
             var query = values
                 .GroupBy(x => x)
                 .Select(g => new { x = g.Key, count = g.Count() })
                 .OrderBy(_ => _.x);
             foreach (var _ in query)
-                Console.WriteLine($"{_.x}: {_.count}");
+                Console.WriteLine($"{_.x}: {(double)_.count / count:F4}");
         }
     }
 }
