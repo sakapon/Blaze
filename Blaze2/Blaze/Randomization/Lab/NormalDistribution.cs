@@ -50,6 +50,9 @@ namespace Blaze.Randomization.Lab
             }
         }
 
+        public static double NextDoubleWith(double sigma = 1, double mean = 0) =>
+            NextDouble() * sigma + mean;
+
         // -M < x < M
         public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
         {
@@ -57,10 +60,20 @@ namespace Blaze.Randomization.Lab
             return x * maxAbsValue / maxSigma;
         }
 
-        // -M < x < M
+        // -M <= x <= M
         public static int NextInt32(int maxAbsValue, double maxSigma = DefaultMaxSigma)
         {
             var x = NextDouble(maxAbsValue + 0.5, maxSigma);
+            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+        }
+
+        // 0 <= x <= M
+        public static int NextInt32ByBinomial(int maxValue)
+        {
+            var range = (double)(maxValue + 1);
+            var maxSigma = range / Math.Sqrt(maxValue);
+            var x = NextDoubleInSigma(maxSigma);
+            x = (x * range / maxSigma + maxValue) / 2;
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
         }
     }
