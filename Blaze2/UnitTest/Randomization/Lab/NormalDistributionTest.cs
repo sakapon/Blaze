@@ -109,8 +109,10 @@ namespace UnitTest.Randomization.Lab
         {
             var count = 10000;
             var values = Enumerable.Repeat(false, count)
-                .Select(_ => NormalDistribution.NextInt32(10));
+                .Select(_ => NormalDistribution.NextInt32_2(5));
             WriteSummary(values, count);
+            Console.WriteLine();
+            WriteTheoreticalBinomial(10);
         }
 
         static void WriteSummary(IEnumerable<double> values, int count) =>
@@ -124,6 +126,28 @@ namespace UnitTest.Randomization.Lab
                 .OrderBy(_ => _.x);
             foreach (var _ in query)
                 Console.WriteLine($"{_.x}: {(double)_.count / count:F4}");
+        }
+
+        static void WriteTheoreticalBinomial(int n)
+        {
+            var all = Math.Pow(2, n);
+            var query = Enumerable.Range(0, n + 1)
+                .Select(k => new { k, p = Combination(n, k) / all });
+            foreach (var _ in query)
+                Console.WriteLine($"{_.k}: {_.p:F4}");
+        }
+
+        public static long Permutation(int n, int k)
+        {
+            if (k == 0) return 1;
+            return Enumerable.Range(0, k).Select(i => n - i).Aggregate(1L, (x0, x) => x0 * x);
+        }
+
+        public static long Combination(int n, int k)
+        {
+            if (k > n / 2) k = n - k;
+            if (k == 0) return 1;
+            return Permutation(n, k) / Enumerable.Range(1, k).Aggregate(1L, (x0, x) => x0 * x);
         }
     }
 }
