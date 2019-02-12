@@ -115,6 +115,35 @@ namespace UnitTest.Randomization.Lab
             WriteTheoreticalBinomial(10);
         }
 
+        [TestMethod]
+        public void NextInt32_Uniform()
+        {
+            var M = 3;
+            var maxAbsValue = M + 0.5;
+            var sigma = Math.Sqrt(2 * M) / 2.0;
+
+            var length = 512;
+            var d = 1.0 / length;
+            var x0 = 0.5 / length;
+            var TwoPi = 2 * Math.PI;
+
+            var query =
+                from x in Enumerable.Range(0, length)
+                from y in Enumerable.Range(0, length)
+                from v in NextDoubles(x0 + d * x, x0 + d * y)
+                select v * sigma;
+            var values = query.Where(v => Math.Abs(v) < maxAbsValue).ToArray();
+            WriteSummary(values, values.Length);
+            Console.WriteLine();
+            WriteTheoreticalBinomial(2 * M);
+
+            IEnumerable<double> NextDoubles(double x, double y)
+            {
+                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(TwoPi * y);
+                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Cos(TwoPi * y);
+            }
+        }
+
         static void WriteSummary(IEnumerable<double> values, int count) =>
             WriteSummary(values.Select(x => (int)Math.Round(x, MidpointRounding.AwayFromZero)), count);
 
