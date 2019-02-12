@@ -80,14 +80,22 @@ namespace Blaze.Randomization.Lab
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
         }
 
+        // -M <= x <= M
+        public static int NextInt32_2(int maxAbsValue)
+        {
+            var sigma = Math.Sqrt(2 * maxAbsValue) / 2.0;
+
+            var x = NextDoubleInRange(maxAbsValue + 0.5, sigma);
+            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+        }
+
         // 0 <= x <= M
         public static int NextInt32ByBinomial(int maxValue)
         {
-            var maxAbsValue = (maxValue + 1) / 2.0;
             var mean = maxValue / 2.0;
             var sigma = Math.Sqrt(maxValue) / 2.0;
 
-            var x = NextDoubleInRange(maxAbsValue, sigma);
+            var x = NextDoubleInRange(mean + 0.5, sigma);
             return (int)Math.Round(x + mean, MidpointRounding.AwayFromZero);
         }
     }
