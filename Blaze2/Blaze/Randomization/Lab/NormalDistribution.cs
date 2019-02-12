@@ -50,6 +50,19 @@ namespace Blaze.Randomization.Lab
             }
         }
 
+        // -M < x < M
+        public static double NextDoubleInRange(double maxAbsValue, double sigma = 1)
+        {
+            if (maxAbsValue < sigma) throw new ArgumentOutOfRangeException(nameof(maxAbsValue), maxAbsValue, "The value must be large enough.");
+
+            // 範囲外の値を無視します。
+            while (true)
+            {
+                var x = NextDouble() * sigma;
+                if (Math.Abs(x) < maxAbsValue) return x;
+            }
+        }
+
         public static double NextDoubleWith(double sigma = 1, double mean = 0) =>
             NextDouble() * sigma + mean;
 
@@ -70,11 +83,12 @@ namespace Blaze.Randomization.Lab
         // 0 <= x <= M
         public static int NextInt32ByBinomial(int maxValue)
         {
-            var range = (double)(maxValue + 1);
-            var maxSigma = range / Math.Sqrt(maxValue);
-            var x = NextDoubleInSigma(maxSigma);
-            x = (x * range / maxSigma + maxValue) / 2;
-            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+            var maxAbsValue = (maxValue + 1) / 2.0;
+            var mean = maxValue / 2.0;
+            var sigma = Math.Sqrt(maxValue) / 2.0;
+
+            var x = NextDoubleInRange(maxAbsValue, sigma);
+            return (int)Math.Round(x + mean, MidpointRounding.AwayFromZero);
         }
     }
 }
