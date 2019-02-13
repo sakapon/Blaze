@@ -33,19 +33,19 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void TruncateByMaxAbs()
+        public void Truncate()
         {
             var maxAbsValue = 5.4;
             var sigma = 3.6;
 
             for (var i = 0; i < 10000; i++)
             {
-                var x = NormalDistribution.TruncateByMaxAbs(maxAbsValue, sigma);
+                var x = NormalDistribution.Truncate(maxAbsValue, sigma);
                 Assert.IsTrue(Abs(x) < maxAbsValue);
             }
 
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.TruncateByMaxAbs(maxAbsValue, sigma))
+                .Select(_ => NormalDistribution.Truncate(maxAbsValue, sigma))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
