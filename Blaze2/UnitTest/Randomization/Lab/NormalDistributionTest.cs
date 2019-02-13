@@ -10,10 +10,10 @@ namespace UnitTest.Randomization.Lab
     public class NormalDistributionTest
     {
         [TestMethod]
-        public void NextDoubles_Rare()
+        public void Standards_Rare()
         {
             var count = 10000;
-            var values = NormalDistribution.NextDoubles()
+            var values = NormalDistribution.Standards()
                 .Take(count)
                 .Where(x => Math.Abs(x) > 3)
                 .ToArray();
@@ -24,10 +24,10 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextDouble()
+        public void Standard()
         {
             for (var i = 0; i < 100; i++)
-                Console.WriteLine(NormalDistribution.NextDouble());
+                Console.WriteLine(NormalDistribution.Standard());
         }
 
         [TestMethod]

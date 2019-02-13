@@ -8,10 +8,10 @@ namespace Blaze.Randomization.Lab
         internal const double DefaultMaxSigma = 3.0;
         const double TwoPi = 2 * Math.PI;
         static readonly Random random = new Random();
-        static readonly IEnumerator<double> doublesEnumerator = NextDoubles().GetEnumerator();
+        static readonly IEnumerator<double> standardsEnumerator = Standards().GetEnumerator();
 
         // 0 < x < 1
-        static double NextDoubleExceptZero()
+        static double UniformExceptZero()
         {
             while (true)
             {
@@ -20,23 +20,26 @@ namespace Blaze.Randomization.Lab
             }
         }
 
-        public static IEnumerable<double> NextDoubles()
+        public static IEnumerable<double> Standards()
         {
             while (true)
             {
-                var x = NextDoubleExceptZero();
-                var y = NextDoubleExceptZero();
+                var x = UniformExceptZero();
+                var y = UniformExceptZero();
 
                 yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(TwoPi * y);
                 yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Cos(TwoPi * y);
             }
         }
 
-        public static double NextDouble()
+        public static double Standard()
         {
-            doublesEnumerator.MoveNext();
-            return doublesEnumerator.Current;
+            standardsEnumerator.MoveNext();
+            return standardsEnumerator.Current;
         }
+
+        public static double NextDoubleWith(double sigma = 1, double mean = 0) =>
+            Standard() * sigma + mean;
 
         // -σ < x < σ
         public static double NextDoubleInSigma(double maxSigma = DefaultMaxSigma)
@@ -46,7 +49,7 @@ namespace Blaze.Randomization.Lab
             // 範囲外の値を無視します。
             while (true)
             {
-                var x = NextDouble();
+                var x = Standard();
                 if (Math.Abs(x) < maxSigma) return x;
             }
         }
@@ -59,13 +62,10 @@ namespace Blaze.Randomization.Lab
 
             while (true)
             {
-                var x = NextDouble() * sigma;
+                var x = Standard() * sigma;
                 if (Math.Abs(x) < maxAbsValue) return x;
             }
         }
-
-        public static double NextDoubleWith(double sigma = 1, double mean = 0) =>
-            NextDouble() * sigma + mean;
 
         // -M < x < M
         public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
