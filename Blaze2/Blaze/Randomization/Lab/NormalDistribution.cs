@@ -32,32 +32,24 @@ namespace Blaze.Randomization.Lab
             }
         }
 
+        /// <summary>
+        /// 最も基本となる標準正規分布に従ったランダム値を取得します。値の範囲は実数全体です。
+        /// </summary>
+        /// <returns>標準正規分布に従ったランダム値。</returns>
         public static double Standard()
         {
             standardsEnumerator.MoveNext();
             return standardsEnumerator.Current;
         }
 
-        public static double NextDoubleWith(double sigma = 1, double mean = 0) =>
+        public static double Next(double sigma = 1, double mean = 0) =>
             Standard() * sigma + mean;
-
-        // -σ < x < σ
-        public static double NextDoubleInSigma(double maxSigma = DefaultMaxSigma)
-        {
-            if (maxSigma < 1) throw new ArgumentOutOfRangeException(nameof(maxSigma), maxSigma, "The value must be large enough.");
-
-            // 範囲外の値を無視します。
-            while (true)
-            {
-                var x = Standard();
-                if (Math.Abs(x) < maxSigma) return x;
-            }
-        }
 
         // -M < x < M
         // Ignores values out of the range.
-        public static double NextDoubleInRange(double maxAbsValue, double sigma = 1)
+        internal static double TruncateByMaxAbs(double maxAbsValue, double sigma = 1)
         {
+            if (sigma <= 0) throw new ArgumentOutOfRangeException(nameof(sigma), sigma, "The value must be positive.");
             if (maxAbsValue < sigma) throw new ArgumentOutOfRangeException(nameof(maxAbsValue), maxAbsValue, "The value must be large enough.");
 
             while (true)
@@ -70,7 +62,7 @@ namespace Blaze.Randomization.Lab
         // -M < x < M
         public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
         {
-            var x = NextDoubleInSigma(maxSigma);
+            var x = TruncateByMaxAbs(maxSigma);
             return x * maxAbsValue / maxSigma;
         }
 
@@ -86,7 +78,7 @@ namespace Blaze.Randomization.Lab
         {
             var sigma = Math.Sqrt(2 * maxAbsValue) / 2.0;
 
-            var x = NextDoubleInRange(maxAbsValue + 0.5, sigma);
+            var x = TruncateByMaxAbs(maxAbsValue + 0.5, sigma);
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
         }
 
@@ -96,7 +88,7 @@ namespace Blaze.Randomization.Lab
             var mean = maxValue / 2.0;
             var sigma = Math.Sqrt(maxValue) / 2.0;
 
-            var x = NextDoubleInRange(mean + 0.5, sigma);
+            var x = TruncateByMaxAbs(mean + 0.5, sigma);
             return (int)Math.Round(x + mean, MidpointRounding.AwayFromZero);
         }
     }

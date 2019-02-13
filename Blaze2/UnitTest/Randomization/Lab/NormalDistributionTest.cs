@@ -31,34 +31,19 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextDoubleInSigma()
+        public void TruncateByMaxAbs()
         {
-            for (var i = 0; i < 10000; i++)
-            {
-                var x = NormalDistribution.NextDoubleInSigma();
-                Assert.IsTrue(Math.Abs(x) < NormalDistribution.DefaultMaxSigma);
-            }
-
-            var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDoubleInSigma())
-                .OrderBy(x => x);
-            foreach (var x in values)
-                Console.WriteLine(x);
-        }
-
-        [TestMethod]
-        public void NextDoubleInSigma_Max()
-        {
-            var max = 1.5;
+            var maxAbsValue = 5.4;
+            var sigma = 3.6;
 
             for (var i = 0; i < 10000; i++)
             {
-                var x = NormalDistribution.NextDoubleInSigma(max);
-                Assert.IsTrue(Math.Abs(x) < max);
+                var x = NormalDistribution.TruncateByMaxAbs(maxAbsValue, sigma);
+                Assert.IsTrue(Math.Abs(x) < maxAbsValue);
             }
 
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDoubleInSigma(max))
+                .Select(_ => NormalDistribution.TruncateByMaxAbs(maxAbsValue, sigma))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
