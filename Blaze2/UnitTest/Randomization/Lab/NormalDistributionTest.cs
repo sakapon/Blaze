@@ -10,24 +10,25 @@ namespace UnitTest.Randomization.Lab
     public class NormalDistributionTest
     {
         [TestMethod]
-        public void Standards_Rare()
+        public void Standards()
         {
-            var count = 10000;
-            var values = NormalDistribution.Standards()
-                .Take(count)
-                .Where(x => Math.Abs(x) > 3)
-                .ToArray();
-
-            Console.WriteLine($"{(double)values.Length * 100 / count} %");
-            foreach (var x in values.OrderBy(Math.Abs))
+            foreach (var x in NormalDistribution.Standards().Take(100))
                 Console.WriteLine(x);
         }
 
         [TestMethod]
-        public void Standard()
+        public void Standard_Rare()
         {
-            for (var i = 0; i < 100; i++)
-                Console.WriteLine(NormalDistribution.Standard());
+            var count = 10000;
+            var values = Enumerable.Repeat(false, count)
+                .Select(_ => NormalDistribution.Standard())
+                .Where(x => Math.Abs(x) > 3)
+                .OrderBy(Math.Abs)
+                .ToArray();
+
+            Console.WriteLine($"{(double)values.Length * 100 / count} %");
+            foreach (var x in values)
+                Console.WriteLine(x);
         }
 
         [TestMethod]
@@ -53,7 +54,7 @@ namespace UnitTest.Randomization.Lab
         public void NextDouble_1()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDouble(1))
+                .Select(_ => NormalDistribution.NextDouble_0(1))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
@@ -63,7 +64,7 @@ namespace UnitTest.Randomization.Lab
         public void NextDouble_1_2()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDouble(1, 2))
+                .Select(_ => NormalDistribution.NextDouble_0(1, 2))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
@@ -73,28 +74,18 @@ namespace UnitTest.Randomization.Lab
         public void NextDouble_Score()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => 50 + NormalDistribution.NextDouble(25))
+                .Select(_ => 50 + NormalDistribution.NextDouble_0(25))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
         }
 
         [TestMethod]
-        public void NextInt32_5()
-        {
-            var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextInt32(5))
-                .OrderBy(x => x);
-            foreach (var x in values)
-                Console.WriteLine(x);
-        }
-
-        [TestMethod]
-        public void NextInt32_Many()
+        public void NextInt32()
         {
             var count = 10000;
             var values = Enumerable.Repeat(false, count)
-                .Select(_ => NormalDistribution.NextInt32_2(5));
+                .Select(_ => NormalDistribution.NextInt32(5));
             WriteSummary(values, count);
             Console.WriteLine();
             WriteTheoreticalBinomial(10);

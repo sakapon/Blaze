@@ -5,7 +5,6 @@ namespace Blaze.Randomization.Lab
 {
     public static class NormalDistribution
     {
-        internal const double DefaultMaxSigma = 3.0;
         const double TwoPi = 2 * Math.PI;
         static readonly Random random = new Random();
         static readonly IEnumerator<double> standardsEnumerator = Standards().GetEnumerator();
@@ -60,21 +59,23 @@ namespace Blaze.Randomization.Lab
         }
 
         // -M < x < M
-        public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
+        [Obsolete]
+        public static double NextDouble_0(double maxAbsValue, double maxSigma = 3)
         {
             var x = TruncateByMaxAbs(maxSigma);
             return x * maxAbsValue / maxSigma;
         }
 
         // -M <= x <= M
-        public static int NextInt32(int maxAbsValue, double maxSigma = DefaultMaxSigma)
+        [Obsolete]
+        public static int NextInt32_0(int maxAbsValue, double maxSigma = 3)
         {
-            var x = NextDouble(maxAbsValue + 0.5, maxSigma);
+            var x = NextDouble_0(maxAbsValue + 0.5, maxSigma);
             return (int)Math.Round(x, MidpointRounding.AwayFromZero);
         }
 
         // -M <= x <= M
-        public static int NextInt32_2(int maxAbsValue)
+        public static int NextInt32(int maxAbsValue)
         {
             var sigma = Math.Sqrt(2 * maxAbsValue) / 2.0;
 
