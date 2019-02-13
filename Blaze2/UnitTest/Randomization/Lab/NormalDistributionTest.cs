@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Blaze.Randomization.Lab;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static System.Math;
 
 namespace UnitTest.Randomization.Lab
 {
@@ -22,8 +23,8 @@ namespace UnitTest.Randomization.Lab
             var count = 10000;
             var values = Enumerable.Repeat(false, count)
                 .Select(_ => NormalDistribution.Standard())
-                .Where(x => Math.Abs(x) > 3)
-                .OrderBy(Math.Abs)
+                .Where(x => Abs(x) > 3)
+                .OrderBy(Abs)
                 .ToArray();
 
             Console.WriteLine($"{(double)values.Length * 100 / count} %");
@@ -40,7 +41,7 @@ namespace UnitTest.Randomization.Lab
             for (var i = 0; i < 10000; i++)
             {
                 var x = NormalDistribution.TruncateByMaxAbs(maxAbsValue, sigma);
-                Assert.IsTrue(Math.Abs(x) < maxAbsValue);
+                Assert.IsTrue(Abs(x) < maxAbsValue);
             }
 
             var values = Enumerable.Repeat(false, 100)
@@ -96,32 +97,32 @@ namespace UnitTest.Randomization.Lab
         {
             var M = 3;
             var maxAbsValue = M + 0.5;
-            var sigma = Math.Sqrt(2 * M) / 2.0;
+            var sigma = Sqrt(2 * M) / 2.0;
 
             var length = 512;
             var d = 1.0 / length;
             var x0 = 0.5 / length;
-            var TwoPi = 2 * Math.PI;
+            var TwoPi = 2 * PI;
 
             var query =
                 from x in Enumerable.Range(0, length)
                 from y in Enumerable.Range(0, length)
                 from v in NextDoubles(x0 + d * x, x0 + d * y)
                 select v * sigma;
-            var values = query.Where(v => Math.Abs(v) < maxAbsValue).ToArray();
+            var values = query.Where(v => Abs(v) < maxAbsValue).ToArray();
             WriteSummary(values, values.Length);
             Console.WriteLine();
             WriteTheoreticalBinomial(2 * M);
 
             IEnumerable<double> NextDoubles(double x, double y)
             {
-                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(TwoPi * y);
-                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Cos(TwoPi * y);
+                yield return Sqrt(-2 * Log(x)) * Sin(TwoPi * y);
+                yield return Sqrt(-2 * Log(x)) * Cos(TwoPi * y);
             }
         }
 
         static void WriteSummary(IEnumerable<double> values, int count) =>
-            WriteSummary(values.Select(x => (int)Math.Round(x, MidpointRounding.AwayFromZero)), count);
+            WriteSummary(values.Select(x => (int)Round(x, MidpointRounding.AwayFromZero)), count);
 
         static void WriteSummary(IEnumerable<int> values, int count)
         {
@@ -135,7 +136,7 @@ namespace UnitTest.Randomization.Lab
 
         static void WriteTheoreticalBinomial(int n)
         {
-            var all = Math.Pow(2, n);
+            var all = Pow(2, n);
             var query = Enumerable.Range(0, n + 1)
                 .Select(k => new { k, p = Combination(n, k) / all });
             foreach (var _ in query)

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Math;
 
 namespace Blaze.Randomization.Lab
 {
     public static class NormalDistribution
     {
         internal const double DefaultConfidenceInSigma = 3.0;
-        const double TwoPi = 2 * Math.PI;
+        const double TwoPi = 2 * PI;
         static readonly Random random = new Random();
         static readonly IEnumerator<double> standardsEnumerator = Standards().GetEnumerator();
 
@@ -27,8 +28,8 @@ namespace Blaze.Randomization.Lab
                 var x = UniformExceptZero();
                 var y = UniformExceptZero();
 
-                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(TwoPi * y);
-                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Cos(TwoPi * y);
+                yield return Sqrt(-2 * Log(x)) * Sin(TwoPi * y);
+                yield return Sqrt(-2 * Log(x)) * Cos(TwoPi * y);
             }
         }
 
@@ -55,7 +56,7 @@ namespace Blaze.Randomization.Lab
             while (true)
             {
                 var x = Standard() * sigma;
-                if (Math.Abs(x) < maxAbsValue) return x;
+                if (Abs(x) < maxAbsValue) return x;
             }
         }
 
@@ -71,26 +72,26 @@ namespace Blaze.Randomization.Lab
         public static int NextInt32_0(int maxAbsValue, double confidenceInSigma = DefaultConfidenceInSigma)
         {
             var x = NextDouble(maxAbsValue + 0.5, confidenceInSigma);
-            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+            return (int)Round(x, MidpointRounding.AwayFromZero);
         }
 
         // -M <= x <= M
         public static int NextInt32(int maxAbsValue)
         {
-            var sigma = Math.Sqrt(2 * maxAbsValue) / 2.0;
+            var sigma = Sqrt(2 * maxAbsValue) / 2.0;
 
             var x = TruncateByMaxAbs(maxAbsValue + 0.5, sigma);
-            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+            return (int)Round(x, MidpointRounding.AwayFromZero);
         }
 
         // 0 <= x <= M
         public static int NextInt32ByBinomial(int maxValue)
         {
             var mean = maxValue / 2.0;
-            var sigma = Math.Sqrt(maxValue) / 2.0;
+            var sigma = Sqrt(maxValue) / 2.0;
 
             var x = TruncateByMaxAbs(mean + 0.5, sigma);
-            return (int)Math.Round(x + mean, MidpointRounding.AwayFromZero);
+            return (int)Round(x + mean, MidpointRounding.AwayFromZero);
         }
     }
 }
