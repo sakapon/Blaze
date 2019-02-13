@@ -54,7 +54,7 @@ namespace UnitTest.Randomization.Lab
         public void NextDouble_1()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDouble_0(1))
+                .Select(_ => NormalDistribution.NextDouble(1))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
@@ -64,7 +64,7 @@ namespace UnitTest.Randomization.Lab
         public void NextDouble_1_2()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.NextDouble_0(1, 2))
+                .Select(_ => NormalDistribution.NextDouble(1, 2))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
@@ -74,7 +74,7 @@ namespace UnitTest.Randomization.Lab
         public void NextDouble_Score()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => 50 + NormalDistribution.NextDouble_0(25))
+                .Select(_ => 50 + NormalDistribution.NextDouble(25))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
