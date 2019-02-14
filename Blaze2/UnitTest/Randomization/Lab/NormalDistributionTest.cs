@@ -33,26 +33,29 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void Truncate()
+        public void Next()
         {
-            var maxAbsValue = 5.4;
-            var sigma = 3.6;
-
-            for (var i = 0; i < 10000; i++)
-            {
-                var x = NormalDistribution.Truncate(maxAbsValue, sigma);
-                Assert.IsTrue(Abs(x) < maxAbsValue);
-            }
-
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => NormalDistribution.Truncate(maxAbsValue, sigma))
+                .Select(_ => NormalDistribution.Next(10, 50))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
         }
 
         [TestMethod]
-        public void NextDouble_1()
+        public void Truncate()
+        {
+            var M = 5.4;
+            var sigma = 3.6;
+
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => NormalDistribution.Truncate(M, sigma));
+            foreach (var x in values)
+                Assert.IsTrue(Abs(x) < M);
+        }
+
+        [TestMethod]
+        public void NextDouble()
         {
             var values = Enumerable.Repeat(false, 100)
                 .Select(_ => NormalDistribution.NextDouble(1))
@@ -72,10 +75,10 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextDouble_Score()
+        public void NextDoubleByMinMax()
         {
             var values = Enumerable.Repeat(false, 100)
-                .Select(_ => 50 + NormalDistribution.NextDouble(25))
+                .Select(_ => NormalDistribution.NextDoubleByMinMax(25, 75))
                 .OrderBy(x => x);
             foreach (var x in values)
                 Console.WriteLine(x);
