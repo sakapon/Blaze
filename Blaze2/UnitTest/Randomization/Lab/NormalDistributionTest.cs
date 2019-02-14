@@ -85,78 +85,21 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextInt32()
+        public void NextDouble_Uniform()
         {
-            var count = 10000;
-            var values = Enumerable.Repeat(false, count)
-                .Select(_ => NormalDistribution.NextInt32(5));
-            WriteSummary(values, count);
-            Console.WriteLine();
-            WriteTheoreticalBinomial(10);
-        }
+            var n = 6;
+            var confidence = 3.0;
+            var mean = n / 2.0;
+            var maxAbsValue = mean + 0.5;
+            var sigma = maxAbsValue / confidence;
+            var sidePoints = 1024;
 
-        [TestMethod]
-        public void NextInt32_Uniform()
-        {
-            var M = 3;
-            var maxAbsValue = M + 0.5;
-            var sigma = Sqrt(2 * M) / 2.0;
-
-            var length = 512;
-            var d = 1.0 / length;
-            var x0 = 0.5 / length;
-            var TwoPi = 2 * PI;
-
-            var query =
-                from x in Enumerable.Range(0, length)
-                from y in Enumerable.Range(0, length)
-                from v in NextDoubles(x0 + d * x, x0 + d * y)
-                select v * sigma;
-            var values = query.Where(v => Abs(v) < maxAbsValue).ToArray();
-            WriteSummary(values, values.Length);
-            Console.WriteLine();
-            WriteTheoreticalBinomial(2 * M);
-
-            IEnumerable<double> NextDoubles(double x, double y)
-            {
-                yield return Sqrt(-2 * Log(x)) * Sin(TwoPi * y);
-                yield return Sqrt(-2 * Log(x)) * Cos(TwoPi * y);
-            }
-        }
-
-        static void WriteSummary(IEnumerable<double> values, int count) =>
-            WriteSummary(values.Select(x => (int)Round(x, MidpointRounding.AwayFromZero)), count);
-
-        static void WriteSummary(IEnumerable<int> values, int count)
-        {
-            var query = values
-                .GroupBy(x => x)
-                .Select(g => new { x = g.Key, count = g.Count() })
-                .OrderBy(_ => _.x);
-            foreach (var _ in query)
-                Console.WriteLine($"{_.x}: {(double)_.count / count:F4}");
-        }
-
-        static void WriteTheoreticalBinomial(int n)
-        {
-            var all = Pow(2, n);
-            var query = Enumerable.Range(0, n + 1)
-                .Select(k => new { k, p = Combination(n, k) / all });
-            foreach (var _ in query)
-                Console.WriteLine($"{_.k}: {_.p:F4}");
-        }
-
-        public static long Permutation(int n, int k)
-        {
-            if (k == 0) return 1;
-            return Enumerable.Range(0, k).Select(i => n - i).Aggregate(1L, (x0, x) => x0 * x);
-        }
-
-        public static long Combination(int n, int k)
-        {
-            if (k > n / 2) k = n - k;
-            if (k == 0) return 1;
-            return Permutation(n, k) / Enumerable.Range(1, k).Aggregate(1L, (x0, x) => x0 * x);
+            var values = BinomialDistributionTest.GetValuesFromUniform(sidePoints)
+                .Select(x => x * sigma)
+                .Where(x => Abs(x) < maxAbsValue)
+                .Select(x => (int)Round(x + mean, MidpointRounding.AwayFromZero))
+                .ToArray();
+            BinomialDistributionTest.WriteSummary(values, n);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace UnitTest.Randomization.Lab
             WriteSummary(values, n);
         }
 
-        static IEnumerable<double> GetValuesFromUniform(int sidePoints)
+        internal static IEnumerable<double> GetValuesFromUniform(int sidePoints)
         {
             var TwoPi = 2 * PI;
             var d = 1.0 / sidePoints;
@@ -92,7 +92,7 @@ namespace UnitTest.Randomization.Lab
             }
         }
 
-        static void WriteSummary(int[] values, int n)
+        internal static void WriteSummary(int[] values, int n)
         {
             Console.WriteLine("Actual : Theoretical");
             var query = values
