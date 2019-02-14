@@ -15,26 +15,19 @@ namespace UnitTest.Randomization.Lab
         {
             var M = 3;
 
-            for (var i = 0; i < 10000; i++)
-            {
-                var x = BinomialDistribution.NextInt32(M);
-                Assert.IsTrue(Abs(x) <= M);
-            }
-
-            var values = Enumerable.Repeat(false, 100)
-                .Select(_ => BinomialDistribution.NextInt32(M))
-                .OrderBy(x => x);
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => BinomialDistribution.NextInt32(M));
             foreach (var x in values)
-                Console.WriteLine(x);
+                Assert.IsTrue(Abs(x) <= M);
         }
 
         [TestMethod]
         public void NextInt32_Distribution()
         {
-            var M = 5;
+            var M = 3;
 
             var values = Enumerable.Repeat(false, 10000)
-                .Select(_ => NormalDistribution.NextInt32(M))
+                .Select(_ => BinomialDistribution.NextInt32(M))
                 .ToArray();
             WriteSummary(values, 2 * M);
         }
@@ -45,17 +38,22 @@ namespace UnitTest.Randomization.Lab
             var m = 11;
             var M = 16;
 
-            for (var i = 0; i < 10000; i++)
-            {
-                var x = BinomialDistribution.NextInt32ByMinMax(m, M);
-                Assert.IsTrue(m <= x && x <= M);
-            }
-
-            var values = Enumerable.Repeat(false, 100)
-                .Select(_ => BinomialDistribution.NextInt32ByMinMax(m, M))
-                .OrderBy(x => x);
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => BinomialDistribution.NextInt32ByMinMax(m, M));
             foreach (var x in values)
-                Console.WriteLine(x);
+                Assert.IsTrue(m <= x && x <= M);
+        }
+
+        [TestMethod]
+        public void NextInt32ByMinMax_Distribution()
+        {
+            var m = 11;
+            var M = 16;
+
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => BinomialDistribution.NextInt32ByMinMax(m, M))
+                .ToArray();
+            WriteSummary(values, M - m);
         }
 
         [TestMethod]
