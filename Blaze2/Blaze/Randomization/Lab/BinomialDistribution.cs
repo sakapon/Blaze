@@ -4,6 +4,9 @@ using static Blaze.Randomization.Lab.NormalDistribution;
 
 namespace Blaze.Randomization.Lab
 {
+    /// <summary>
+    /// Provides a set of methods for binomial distribution.
+    /// </summary>
     public static class BinomialDistribution
     {
         // -M <= x <= M

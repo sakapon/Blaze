@@ -4,6 +4,9 @@ using static System.Math;
 
 namespace Blaze.Randomization.Lab
 {
+    /// <summary>
+    /// Provides a set of methods for normal distribution.
+    /// </summary>
     public static class NormalDistribution
     {
         internal const double DefaultConfidenceInSigma = 3.0;
@@ -80,37 +83,6 @@ namespace Blaze.Randomization.Lab
         {
             var x = NextDouble(maxAbsValue + 0.5, confidenceInSigma);
             return (int)Round(x, MidpointRounding.AwayFromZero);
-        }
-
-        // -M <= x <= M
-        public static int NextInt32(int maxAbsValue)
-        {
-            var sigma = Sqrt(2 * maxAbsValue) / 2.0;
-
-            var x = Truncate(maxAbsValue + 0.5, sigma);
-            return (int)Round(x, MidpointRounding.AwayFromZero);
-        }
-
-        // m <= x <= M
-        public static int NextInt32ByMinMax(int minValue, int maxValue)
-        {
-            var mean = (maxValue + minValue) / 2.0;
-            var sigma = Sqrt(maxValue - minValue) / 2.0;
-            var maxAbsValue = (maxValue - minValue) / 2.0 + 0.5;
-
-            var x = Truncate(maxAbsValue, sigma);
-            return (int)Round(x + mean, MidpointRounding.AwayFromZero);
-        }
-
-        // 0 <= x <= M
-        [Obsolete]
-        public static int NextInt32ByBinomial(int maxValue)
-        {
-            var mean = maxValue / 2.0;
-            var sigma = Sqrt(maxValue) / 2.0;
-
-            var x = Truncate(mean + 0.5, sigma);
-            return (int)Round(x + mean, MidpointRounding.AwayFromZero);
         }
     }
 }
