@@ -78,10 +78,16 @@ namespace Blaze.Randomization.Lab
         }
 
         // -M <= x <= M
-        [Obsolete]
-        public static int NextInt32_0(int maxAbsValue, double confidenceInSigma = DefaultConfidenceInSigma)
+        public static int NextInt32(int maxAbsValue, double confidenceInSigma = DefaultConfidenceInSigma)
         {
             var x = NextDouble(maxAbsValue + 0.5, confidenceInSigma);
+            return (int)Round(x, MidpointRounding.AwayFromZero);
+        }
+
+        // m <= x <= M
+        public static int NextInt32ByMinMax(int minValue, int maxValue, double confidenceInSigma = DefaultConfidenceInSigma)
+        {
+            var x = NextDoubleByMinMax(minValue - 0.5, maxValue + 0.5, confidenceInSigma);
             return (int)Round(x, MidpointRounding.AwayFromZero);
         }
     }

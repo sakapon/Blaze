@@ -85,7 +85,30 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
-        public void NextDouble_Uniform()
+        public void NextInt32_Distribution()
+        {
+            var M = 3;
+
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => NormalDistribution.NextInt32(M))
+                .ToArray();
+            BinomialDistributionTest.WriteSummary(values, 2 * M);
+        }
+
+        [TestMethod]
+        public void NextInt32ByMinMax_Distribution()
+        {
+            var m = 11;
+            var M = 16;
+
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => NormalDistribution.NextInt32ByMinMax(m, M))
+                .ToArray();
+            BinomialDistributionTest.WriteSummary(values, M - m);
+        }
+
+        [TestMethod]
+        public void NextInt32_Uniform()
         {
             var n = 6;
             var confidence = 3.0;
