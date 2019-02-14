@@ -59,17 +59,18 @@ namespace UnitTest.Randomization.Lab
         [TestMethod]
         public void NextInt32_Uniform()
         {
-            var M = 5;
-            var sigma = Sqrt(2 * M) / 2.0;
-            var maxAbsValue = M + 0.5;
-            var sidePoints = 512;
+            var n = 6;
+            var mean = n / 2.0;
+            var sigma = Sqrt(n) / 2.0;
+            var maxAbsValue = mean + 0.5;
+            var sidePoints = 1024;
 
             var values = GetValuesFromUniform(sidePoints)
                 .Select(x => x * sigma)
                 .Where(x => Abs(x) < maxAbsValue)
-                .Select(x => (int)Round(x, MidpointRounding.AwayFromZero))
+                .Select(x => (int)Round(x + mean, MidpointRounding.AwayFromZero))
                 .ToArray();
-            WriteSummary(values, 2 * M);
+            WriteSummary(values, n);
         }
 
         static IEnumerable<double> GetValuesFromUniform(int sidePoints)
