@@ -32,16 +32,11 @@ namespace UnitTest.Randomization.Lab
         public void NextInt32_Distribution()
         {
             var M = 5;
-            var count = 10000;
 
-            var query = Enumerable.Repeat(false, count)
+            var values = Enumerable.Repeat(false, 10000)
                 .Select(_ => NormalDistribution.NextInt32(M))
-                .GroupBy(x => x)
-                .Select(g => new { x = g.Key, r = (double)g.Count() / count })
-                .OrderBy(_ => _.x)
-                .Zip(GetTheoretical(2 * M), (_, t) => new { _.x, _.r, t });
-            foreach (var _ in query)
-                Console.WriteLine($"{_.x}: {_.r:F4} : {_.t:F4}");
+                .ToArray();
+            WriteSummary(values, 2 * M);
         }
 
         [TestMethod]
@@ -76,14 +71,7 @@ namespace UnitTest.Randomization.Lab
                 .Where(x => Abs(x) < maxAbsValue)
                 .Select(x => (int)Round(x, MidpointRounding.AwayFromZero))
                 .ToArray();
-
-            var query = values
-                .GroupBy(x => x)
-                .Select(g => new { x = g.Key, r = (double)g.Count() / values.Length })
-                .OrderBy(_ => _.x)
-                .Zip(GetTheoretical(2 * M), (_, t) => new { _.x, _.r, t });
-            foreach (var _ in query)
-                Console.WriteLine($"{_.x}: {_.r:F4} : {_.t:F4}");
+            WriteSummary(values, 2 * M);
         }
 
         static IEnumerable<double> GetValuesFromUniform(int sidePoints)
@@ -103,6 +91,18 @@ namespace UnitTest.Randomization.Lab
                 yield return Sqrt(-2 * Log(x)) * Sin(TwoPi * y);
                 yield return Sqrt(-2 * Log(x)) * Cos(TwoPi * y);
             }
+        }
+
+        static void WriteSummary(int[] values, int n)
+        {
+            Console.WriteLine("Actual : Theoretical");
+            var query = values
+                .GroupBy(x => x)
+                .Select(g => new { x = g.Key, r = (double)g.Count() / values.Length })
+                .OrderBy(_ => _.x)
+                .Zip(GetTheoretical(n), (_, t) => new { _.x, _.r, t });
+            foreach (var _ in query)
+                Console.WriteLine($"{_.x}: {_.r:F4} : {_.t:F4}");
         }
 
         static IEnumerable<double> GetTheoretical(int n)
