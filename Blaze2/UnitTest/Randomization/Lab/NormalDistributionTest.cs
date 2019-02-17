@@ -64,7 +64,7 @@ namespace UnitTest.Randomization.Lab
             var values = Enumerable.Repeat(false, 10000)
                 .Select(_ => NormalDistribution.TruncateByMinMax(m, M, sigma));
             foreach (var x in values)
-                Assert.IsTrue(m <= x && x <= M);
+                Assert.IsTrue(m < x && x < M);
         }
 
         [TestMethod]
