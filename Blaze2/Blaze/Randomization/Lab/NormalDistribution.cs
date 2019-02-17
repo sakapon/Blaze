@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Math;
 
 namespace Blaze.Randomization.Lab
 {
+    /// <summary>
+    /// Provides a set of methods for normal distribution.
+    /// </summary>
     public static class NormalDistribution
     {
-        internal const double DefaultMaxSigma = 3.0;
+        internal const double DefaultConfidenceInSigma = 3.0;
+        const double TwoPi = 2 * PI;
         static readonly Random random = new Random();
-        static readonly IEnumerator<double> doublesEnumerator = NextDoubles().GetEnumerator();
+        static readonly IEnumerator<double> standardsEnumerator = Standards().GetEnumerator();
 
         // 0 < x < 1
-        static double NextDoubleExceptZero()
+        static double UniformExceptZero()
         {
             while (true)
             {
@@ -19,49 +24,78 @@ namespace Blaze.Randomization.Lab
             }
         }
 
-        public static IEnumerable<double> NextDoubles()
+        public static IEnumerable<double> Standards()
         {
             while (true)
             {
-                var x = NextDoubleExceptZero();
-                var y = NextDoubleExceptZero();
+                var x = UniformExceptZero();
+                var y = UniformExceptZero();
 
-                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Sin(2 * Math.PI * y);
-                yield return Math.Sqrt(-2 * Math.Log(x)) * Math.Cos(2 * Math.PI * y);
+                yield return Sqrt(-2 * Log(x)) * Sin(TwoPi * y);
+                yield return Sqrt(-2 * Log(x)) * Cos(TwoPi * y);
             }
         }
 
-        public static double NextDouble()
+        /// <summary>
+        /// 最も基本となる標準正規分布に従ったランダム値を取得します。値の範囲は実数全体です。
+        /// </summary>
+        /// <returns>標準正規分布に従ったランダム値。</returns>
+        public static double Standard()
         {
-            doublesEnumerator.MoveNext();
-            return doublesEnumerator.Current;
+            standardsEnumerator.MoveNext();
+            return standardsEnumerator.Current;
         }
 
-        // -σ < x < σ
-        public static double NextDoubleInSigma(double maxSigma = DefaultMaxSigma)
-        {
-            if (maxSigma < 1) throw new ArgumentOutOfRangeException(nameof(maxSigma), maxSigma, "The value must be large enough.");
+        public static double Next(double sigma = 1, double mean = 0) =>
+            Standard() * sigma + mean;
 
-            // 範囲外の値を無視します。
+        // -M < x < M
+        // Ignores values out of the range.
+        internal static double Truncate(double maxAbsValue, double sigma = 1)
+        {
+            if (sigma <= 0) throw new ArgumentOutOfRangeException(nameof(sigma), sigma, "The value must be positive.");
+            if (maxAbsValue < sigma) throw new ArgumentOutOfRangeException(nameof(maxAbsValue), maxAbsValue, "The value must be large enough.");
+
             while (true)
             {
-                var x = NextDouble();
-                if (Math.Abs(x) < maxSigma) return x;
+                var x = Standard() * sigma;
+                if (Abs(x) < maxAbsValue) return x;
             }
         }
 
-        // -M < x < M
-        public static double NextDouble(double maxAbsValue, double maxSigma = DefaultMaxSigma)
+        // m < x < M
+        internal static double TruncateByMinMax(double minValue, double maxValue, double sigma = 1)
         {
-            var x = NextDoubleInSigma(maxSigma);
-            return x * maxAbsValue / maxSigma;
+            var x = Truncate((maxValue - minValue) / 2, sigma);
+            return x + (maxValue + minValue) / 2;
         }
 
         // -M < x < M
-        public static int NextInt32(int maxAbsValue, double maxSigma = DefaultMaxSigma)
+        public static double NextDouble(double maxAbsValue, double confidenceInSigma = DefaultConfidenceInSigma)
         {
-            var x = NextDouble(maxAbsValue + 0.5, maxSigma);
-            return (int)Math.Round(x, MidpointRounding.AwayFromZero);
+            var sigma = maxAbsValue / confidenceInSigma;
+            return Truncate(maxAbsValue, sigma);
+        }
+
+        // m < x < M
+        public static double NextDoubleByMinMax(double minValue, double maxValue, double confidenceInSigma = DefaultConfidenceInSigma)
+        {
+            var x = NextDouble((maxValue - minValue) / 2, confidenceInSigma);
+            return x + (maxValue + minValue) / 2;
+        }
+
+        // -M <= x <= M
+        public static int NextInt32(int maxAbsValue, double confidenceInSigma = DefaultConfidenceInSigma)
+        {
+            var x = NextDouble(maxAbsValue + 0.5, confidenceInSigma);
+            return (int)Round(x, MidpointRounding.AwayFromZero);
+        }
+
+        // m <= x <= M
+        public static int NextInt32ByMinMax(int minValue, int maxValue, double confidenceInSigma = DefaultConfidenceInSigma)
+        {
+            var x = NextDoubleByMinMax(minValue - 0.5, maxValue + 0.5, confidenceInSigma);
+            return (int)Round(x, MidpointRounding.AwayFromZero);
         }
     }
 }
