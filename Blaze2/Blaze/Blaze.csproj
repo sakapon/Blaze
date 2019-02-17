@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <Version>2.0.13</Version>
+    <Version>2.0.14</Version>
     <Title>Blaze</Title>
     <AssemblyTitle>Blaze</AssemblyTitle>
     <Product>Blaze</Product>
@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/sakapon/Blaze</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/sakapon/Blaze/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>Math Mathematics Random Proposition</PackageTags>
-    <PackageReleaseNotes>Add features for normal distribution.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add features for binomial distribution.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
