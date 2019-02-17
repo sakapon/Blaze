@@ -63,6 +63,13 @@ namespace Blaze.Randomization.Lab
             }
         }
 
+        // m < x < M
+        internal static double TruncateByMinMax(double minValue, double maxValue, double sigma = 1)
+        {
+            var x = Truncate((maxValue - minValue) / 2, sigma);
+            return x + (maxValue + minValue) / 2;
+        }
+
         // -M < x < M
         public static double NextDouble(double maxAbsValue, double confidenceInSigma = DefaultConfidenceInSigma)
         {

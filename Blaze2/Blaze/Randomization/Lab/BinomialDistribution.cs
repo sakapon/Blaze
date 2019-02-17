@@ -22,12 +22,10 @@ namespace Blaze.Randomization.Lab
         // m <= x <= M
         public static int NextInt32ByMinMax(int minValue, int maxValue)
         {
-            var mean = (maxValue + minValue) / 2.0;
             var sigma = Sqrt(maxValue - minValue) / 2.0;
-            var maxAbsValue = (maxValue - minValue) / 2.0 + 0.5;
 
-            var x = Truncate(maxAbsValue, sigma);
-            return (int)Round(x + mean, MidpointRounding.AwayFromZero);
+            var x = TruncateByMinMax(minValue - 0.5, maxValue + 0.5, sigma);
+            return (int)Round(x, MidpointRounding.AwayFromZero);
         }
     }
 }

@@ -55,6 +55,19 @@ namespace UnitTest.Randomization.Lab
         }
 
         [TestMethod]
+        public void TruncateByMinMax()
+        {
+            var m = 11.1;
+            var M = 19.9;
+            var sigma = 3.6;
+
+            var values = Enumerable.Repeat(false, 10000)
+                .Select(_ => NormalDistribution.TruncateByMinMax(m, M, sigma));
+            foreach (var x in values)
+                Assert.IsTrue(m <= x && x <= M);
+        }
+
+        [TestMethod]
         public void NextDouble()
         {
             var values = Enumerable.Repeat(false, 100)
