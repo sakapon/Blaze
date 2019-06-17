@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Blaze.Randomization.Lab
 {
+    /// <summary>
+    /// Provides a set of methods for exponential distribution.
+    /// </summary>
     public static class ExponentialDistribution
     {
         static readonly Random random = new Random();
