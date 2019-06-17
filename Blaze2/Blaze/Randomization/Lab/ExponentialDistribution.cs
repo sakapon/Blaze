@@ -10,6 +10,7 @@ namespace Blaze.Randomization.Lab
     {
         static readonly Random random = new Random();
 
+        // 0 <= x < ∞
         public static double Next(double mean) =>
             -mean * Math.Log(1 - random.NextDouble());
     }
