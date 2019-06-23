@@ -12,6 +12,15 @@ namespace UnitTest.Randomization.Lab
         static readonly Random random = new Random();
 
         [TestMethod]
+        public void GetRandomIndexByCumulation_Range()
+        {
+            Assert.AreEqual(0, new[] { 0.0 }.GetRandomIndexByCumulation());
+            Assert.AreEqual(0, new[] { 0.0, 1.0 }.GetRandomIndexByCumulation());
+            Assert.AreEqual(-1, new[] { 1.0 }.GetRandomIndexByCumulation());
+            Assert.AreEqual(1, new[] { -1.0, 0.0 }.GetRandomIndexByCumulation());
+        }
+
+        [TestMethod]
         public void GetRandomIndexByCumulation_1()
         {
             var count = 99999;
