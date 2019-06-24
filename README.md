@@ -19,6 +19,7 @@ Install-Package Blaze
 - .NET Framework 4.5
 
 ## Release Notes
+- **v2.0.16** Add features for exponential distribution.
 - **v2.0.14** Add features for binomial distribution.
 - **v2.0.12** Add features for normal distribution.
 - **v2.0.11** For .NET Standard.
