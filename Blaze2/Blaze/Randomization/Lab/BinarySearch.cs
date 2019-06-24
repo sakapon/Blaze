@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Blaze.Randomization.Lab
 {
+    /// <summary>
+    /// Provides a set of methods for random numbers using binary search.
+    /// </summary>
     public static class BinarySearch
     {
         static readonly Random random = new Random();
